@@ -119,6 +119,6 @@ Replace `ADMIN_EMAIL` with the administrator's Gmail address. The Firebase `apiK
 
 ## Author
 
-**Hikmat** — [@nasrullazadehikmat](https://github.com/nasrullazadehikmat)
+**Hikmat Nasrullazade** — [@nasrullazadehikmat](https://github.com/nasrullazadehikmat)
 
 Built to make European youth opportunities easier to reach for young people in Azerbaijan.
