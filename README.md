@@ -37,7 +37,6 @@ Global Volunteers puts everything in one place:
 
 ![Project explorer with search and filters](images/projects.png)
 
-![Package calculator with cost by outcome](images/packages.png)
 
 ### For the administrator
 - **Private admin panel** (`/?admin`) to add, edit and delete projects without touching the code.
