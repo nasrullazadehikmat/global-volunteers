@@ -6,7 +6,12 @@
     // Formu e-poçta göndərmək üçün Formspree ünvanını yazın, məs.: "https://formspree.io/f/xxxxxxx"
     // Boş qalsa, form doldurulanda WhatsApp mesajı hazır mətnlə açılır.
     FORM_ENDPOINT: "",
-    WA_NUMBER: "994773091698",
+    // Əlaqə nömrələri: nömrəni YALNIZ burada dəyişin (saytdakı bütün düymə və yazılar buradan yenilənir).
+    // *_NUMBER — yalnız rəqəmlər (wa.me linki üçün), *_DISPLAY — ekranda görünən yazılış.
+    WA_NUMBER: "994706386353",
+    WA_DISPLAY: "+994 70 638 63 53",
+    CONSULT_NUMBER: "994706386353",
+    CONSULT_DISPLAY: "+994 70 638 63 53",
     // Aylıq qalan yer sayı. Rəqəm yazsanız ("Bu ay qalan yer: 3") göstərilir; null olsa ümumi qeyd qalır.
     SLOTS_LEFT: null,
     // Layihə siyahısı və admin panel üçün Firebase məlumatları (təlimata bax). Boş olsa, "Layihələr" bölməsi gizlədilir.
@@ -634,10 +639,25 @@
     }
   }
 
+  /* --- əlaqə nömrələrini CONFIG-dən saytdakı bütün link və yazılara tətbiq edir --- */
+  function applyContacts() {
+    var nums = { main: CONFIG.WA_NUMBER, consult: CONFIG.CONSULT_NUMBER };
+    var disp = { main: CONFIG.WA_DISPLAY, consult: CONFIG.CONSULT_DISPLAY };
+    Array.prototype.forEach.call(document.querySelectorAll("a[data-wa]"), function (a) {
+      var n = nums[a.getAttribute("data-wa")];
+      if (n) a.setAttribute("href", a.getAttribute("href").replace(/wa\.me\/\d+/, "wa.me/" + n));
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-phone]"), function (e) {
+      var d = disp[e.getAttribute("data-phone")];
+      if (d) e.textContent = d;
+    });
+  }
+
   /* --- start --- */
   var qs;
   try { qs = new URLSearchParams(location.search); } catch(e){ qs = { get: function(){ return ""; }, has: function(){ return false; } }; }
   if (qs.has("admin")) { initAdmin(); return; }
+  applyContacts();
   decorate();
   if (qs.get("lang") === "en") setLang("en");
   state.focus = qs.get("p") || "";
