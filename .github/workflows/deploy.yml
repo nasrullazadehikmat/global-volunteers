@@ -17,4 +17,4 @@ jobs:
           server: ftpupload.net
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /globalvolunteers.page.gd/
+          server-dir: /globalvolunteers.page.gd/htdocs/
