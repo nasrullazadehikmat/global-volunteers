@@ -31,6 +31,10 @@ Global Volunteers puts everything in one place:
 - **Smart project cards** showing the country, deadline, dates and a countdown badge ("Last day today", "4 days left"). Expired projects are hidden by default and can be shown with one checkbox.
 - **Quick actions on every project:** open the official page, copy the project link, or send it to the team on WhatsApp.
 - **Package calculator** with outcome-based pricing: the visitor chooses "no acceptance / 1 acceptance / 2+ acceptances" and instantly sees what they would pay in total.
+- **Interactive Europe map** — countries with open projects glow and pulse; clicking one flies a plane from Baku and lists that country's projects.
+- **"Find my project" quiz** — five questions (interest, costs, countries, programme, urgency) return the three best-matching open projects, with a shareable WhatsApp text and a story-sized image.
+- **Add to calendar** — every project card downloads an `.ics` file with the deadline and reminders (3 days, 1 day, and the morning of the deadline). No server needed.
+- **"Deadlines this week"** strip with a one-click copy for WhatsApp groups.
 - **Animated boarding-pass hero** that rotates through European destinations.
 - **Contact form** that sends by e-mail (Formspree) or falls back to a ready-made WhatsApp message.
 - **Information dialogs:** Sending Organization membership, About us, FAQ, Terms and refunds, Privacy policy.
@@ -75,8 +79,10 @@ global-volunteers/
 │   └── style.css     # all styling
 ├── js/
 │   ├── main.js       # settings, language switch, project list, filters, admin panel
-│   └── effects.js    # scroll animations, counters, boarding pass, package calculator
-├── images/           # screenshots used in this README
+│   ├── effects.js    # scroll animations, counters, boarding pass, package calculator
+│   ├── extras.js     # Europe map, match quiz, deadlines this week
+│   └── europe-map.js # simplified Natural Earth country shapes (generated)
+├── images/           # logo files and screenshots used in this README
 ├── README.md
 └── .gitignore
 ```
