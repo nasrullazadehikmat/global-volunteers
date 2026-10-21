@@ -299,7 +299,7 @@
     act.appendChild(cp);
     var w = el("a", "prj-btn wa");
     w.innerHTML = WA_SVG;
-    w.appendChild(document.createTextNode(t("pj_wa")));
+    w.appendChild(document.createTextNode(L() === "az" ? "Dəstək al" : "Get support"));
     w.href = waProject(p); w.target = "_blank"; w.rel = "noopener";
     act.appendChild(w);
     c.appendChild(act);
@@ -390,7 +390,7 @@
     items: function(){ return state.items; },
     status: function(){ return state.status; },
     lang: function(){ return L(); },
-    cName: cName, daysLeft: daysLeft, fmtDay: fmtDay, safeUrl: safeUrl, projectUrl: projectUrl, toast: toast, copyText: copyText,
+    cName: cName, waProject: waProject, daysLeft: daysLeft, fmtDay: fmtDay, safeUrl: safeUrl, projectUrl: projectUrl, toast: toast, copyText: copyText,
     downloadICS: downloadICS,
     filterCountry: function(c){
       state.country = c || ""; state.focus = ""; state.limit = PAGE; renderProjects();

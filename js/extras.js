@@ -13,7 +13,7 @@
       k: "KƏŞF ET", h: "Layihəni xəritədən tapın", p: "Ölkəni seçin — həmin ölkədəki açıq layihələri göstərək.",
       mapT: "Layihələr xəritədə", mapHint: "Parlayan ölkələrdə açıq layihə var. Üzərinə klikləyin.",
       from: "Bakı", proj: "layihə", none: "Bu ölkə üçün hazırda açıq layihə yoxdur.", pickC: "Ölkə seçin",
-      details: "Detallara bax", all: "Hamısına bax", official: "Rəsmi səhifə",
+      details: "Detallara bax", support: "Dəstək al", all: "Hamısına bax", official: "Rəsmi səhifə",
       cal: "Təqvimə əlavə et", left: "gün qalıb", today: "Bu gün son gündür", noDl: "Son tarix qeyd olunmayıb",
       week: "Bu həftə bitən layihələr"
     },
@@ -21,7 +21,7 @@
       k: "EXPLORE", h: "Find a project on the map", p: "Pick a country and we'll show its open projects.",
       mapT: "Projects on the map", mapHint: "Glowing countries have open projects. Click one.",
       from: "Baku", proj: "projects", none: "No open projects for this country right now.", pickC: "Pick a country",
-      details: "View details", all: "See all", official: "Official page",
+      details: "View details", support: "Get support", all: "See all", official: "Official page",
       cal: "Add to calendar", left: "days left", today: "Last day today", noDl: "No deadline listed",
       week: "Deadlines this week"
     }
@@ -131,6 +131,7 @@
     var act = el("div", "gv-mini-act");
     var d = el("button", "prj-btn primary", T().details); d.type = "button"; d.setAttribute("data-show", p.id); act.appendChild(d);
     if (p.deadline) { var k = el("button", "prj-btn", "📅 " + T().cal); k.type = "button"; k.setAttribute("data-ics", p.id); act.appendChild(k); }
+    var sup = el("a", "prj-btn wa", T().support); sup.href = GV.waProject(p); sup.target = "_blank"; sup.rel = "noopener"; act.appendChild(sup);
     var u = GV.safeUrl(p.link);
     if (u) { var a = el("a", "prj-btn", T().official); a.href = u; a.target = "_blank"; a.rel = "noopener noreferrer"; act.appendChild(a); }
     c.appendChild(act);

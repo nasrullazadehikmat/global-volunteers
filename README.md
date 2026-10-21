@@ -34,7 +34,7 @@ Global Volunteers puts everything in one place:
 - **Interactive Europe map** — countries with open projects glow and pulse; clicking one flies a plane from Baku and lists that country's projects.
 - **Add to calendar** — every project card downloads an `.ics` file with the deadline and reminders (3 days, 1 day, and the morning of the deadline). No server needed.
 - **"Deadlines this week"** strip listing projects that close within 7 days.
-- **"Get support"** button in the navigation that jumps straight to the packages.
+- **"Get support"** button on every project (cards and map list) that opens WhatsApp with the project prefilled.
 - **Animated boarding-pass hero** that rotates through European destinations.
 - **Contact form** that sends by e-mail (Formspree) or falls back to a ready-made WhatsApp message.
 - **Information dialogs:** Sending Organization membership, About us, FAQ, Terms and refunds, Privacy policy.
