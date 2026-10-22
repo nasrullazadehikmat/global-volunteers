@@ -35,6 +35,7 @@ Global Volunteers puts everything in one place:
 - **Add to calendar** — every project card downloads an `.ics` file with the deadline and reminders (3 days, 1 day, and the morning of the deadline). No server needed.
 - **"Deadlines this week"** strip listing projects that close within 7 days.
 - **"Get support"** button on every project (cards and map list) that opens WhatsApp with the project prefilled.
+- **Dark / light mode** — a toggle in the header (☾ / ☀); the choice is remembered, and without a choice the site follows the device setting.
 - **Animated boarding-pass hero** that rotates through European destinations.
 - **Contact form** that sends by e-mail (Formspree) or falls back to a ready-made WhatsApp message.
 - **Information dialogs:** Sending Organization membership, About us, FAQ, Terms and refunds, Privacy policy.
@@ -80,6 +81,7 @@ global-volunteers/
 ├── js/
 │   ├── main.js       # settings, language switch, project list, filters, admin panel
 │   ├── effects.js    # scroll animations, counters, boarding pass, package calculator
+│   ├── theme.js      # dark / light mode toggle
 │   ├── extras.js     # Europe map, deadlines this week
 │   └── europe-map.js # simplified Natural Earth country shapes (generated)
 ├── images/           # logo files and screenshots used in this README
