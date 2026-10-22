@@ -45,6 +45,7 @@ Global Volunteers puts everything in one place:
 
 ### For the administrator
 - **Private admin panel** (`/?admin`) to add, edit and delete projects without touching the code.
+- **Salto auto-fill:** paste the copied text of a Salto Youth page (Ctrl+A, Ctrl+C) and the form fills itself (title, country, dates, deadline, cost coverage, description); the admin reviews and saves.
 - **Google sign-in** and **server-side security rules**: anyone can read the project list, but only the admin's verified Google account can write to the database. Other accounts are rejected by the database, not just hidden in the interface.
 - The admin page is marked `noindex, nofollow` so search engines ignore it.
 
@@ -81,6 +82,7 @@ global-volunteers/
 ├── js/
 │   ├── main.js       # settings, language switch, project list, filters, admin panel
 │   ├── effects.js    # scroll animations, counters, boarding pass, package calculator
+│   ├── salto-parse.js # reads copied Salto Youth page text for the admin form
 │   ├── theme.js      # dark / light mode toggle
 │   ├── extras.js     # Europe map, deadlines this week
 │   └── europe-map.js # simplified Natural Earth country shapes (generated)

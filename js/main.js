@@ -532,6 +532,12 @@
         root.innerHTML =
           '<header class="adm-top"><h1>Layihələr — Admin</h1><div><span class="who" id="admWho"></span>' +
           '<a class="adm-btn" href="./" style="margin-right:8px;">Sayta bax</a><button type="button" class="adm-btn" id="admOut">Çıxış</button></div></header>' +
+          '<details class="adm-card" id="admSalto" open><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Salto səhifəsindən avtomatik doldur</summary>' +
+          '<p class="adm-note" style="margin:12px 0;">1) Salto layihə səhifəsini açın → <b>Ctrl+A</b>, <b>Ctrl+C</b>. 2) Mətni aşağıya yapışdırın və linki yazın. 3) «Doldur» — aşağıdakı forma özü dolacaq, yoxlayıb «Əlavə et» deyin.</p>' +
+          '<div class="field full"><label for="a-slink">Salto linki</label><input id="a-slink" type="url" maxlength="500" placeholder="https://www.salto-youth.net/tools/european-training-calendar/training/..."></div>' +
+          '<div class="field full"><label for="a-spaste">Səhifənin kopyalanmış mətni</label><textarea id="a-spaste" style="min-height:120px;" spellcheck="false" placeholder="Səhifədən kopyaladığınız mətni bura yapışdırın"></textarea></div>' +
+          '<div class="adm-actions" style="margin-top:12px;"><button type="button" class="btn-primary" id="admSaltoGo" style="border:none;cursor:pointer;font-family:Inter,sans-serif;">Doldur</button></div>' +
+          '<p class="adm-msg" id="admSaltoMsg" role="status"></p></details>' +
           '<form id="admForm" class="adm-card" autocomplete="off"><h2 id="admFormTitle">Yeni layihə</h2><div class="adm-grid">' +
           '<div class="field full"><label for="a-title">Başlıq *</label><input id="a-title" type="text" required maxlength="200"></div>' +
           '<div class="field"><label for="a-program">Proqram *</label><select id="a-program" required><option value="">Seçin…</option><option value="SALTO">SALTO Youth</option><option value="ESC">ESC</option></select></div>' +
@@ -610,6 +616,22 @@
           });
         }
 
+        /* ---- Salto səhifəsindən avtomatik doldurma ---- */
+        $("#admSaltoGo").addEventListener("click", function(){
+          var sm = $("#admSaltoMsg");
+          function say2(t, err){ sm.textContent = t; sm.className = "adm-msg" + (err ? " err" : ""); }
+          var P = window.GV_parseSalto, txt = $("#a-spaste").value, lk = $("#a-slink").value.trim();
+          if (!P) { say2("Parser yüklənməyib (js/salto-parse.js).", true); return; }
+          if (!txt.trim()) { say2("Əvvəlcə Salto səhifəsinin mətnini yapışdırın.", true); return; }
+          var r = P.parse(txt, {countries: COUNTRIES.map(function(c){ return c[0]; }), link: lk});
+          if (!r.found) { say2("Salto səhifəsinin sahələri tapılmadı. Səhifədə Ctrl+A etdiyinizdən əmin olun.", true); return; }
+          if (editing) reset();
+          f("title").value = r.title; f("program").value = "SALTO"; f("country").value = r.country; f("deadline").value = r.deadline;
+          f("costs").value = r.costs; f("start").value = r.startDate; f("end").value = r.endDate; f("link").value = lk; f("about").value = r.about;
+          var miss = r.warnings.slice(); if (!lk) { if (miss.indexOf("Rəsmi link") < 0) miss.push("Rəsmi link"); }
+          say2(miss.length ? "Doldu. Tapılmadı, əllə yazın: " + miss.join(", ") + "." : "Doldu. Aşağıdakı formanı yoxlayıb «Əlavə et» düyməsini basın. «Haqqında» ingiliscədir, istəsəniz tərcümə edin.", miss.length > 0);
+          $("#admForm").scrollIntoView({behavior: "smooth", block: "start"});
+        });
         $("#admForm").addEventListener("submit", function(e){
           e.preventDefault();
           var data = {
