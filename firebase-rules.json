@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "projects": {
+      ".read": true,
+      ".write": "auth != null && auth.token.email === 'ADMIN_EMAIL' && auth.token.email_verified === true"
+    },
+    "stats": {
+      ".read": "auth != null && auth.token.email === 'ADMIN_EMAIL' && auth.token.email_verified === true",
+      "visits": {
+        "$day": {
+          ".write": "$day.matches(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/) && newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
+        }
+      },
+      "projects": {
+        "$id": {
+          "$metric": {
+            ".write": "root.child('projects').child($id).exists() && ($metric === 'views' || $metric === 'support' || $metric === 'official' || $metric === 'calendar' || $metric === 'copy' || $metric === 'fav') && newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
+          }
+        }
+      },
+      "cta": {
+        "$name": {
+          ".write": "($name === 'member' || $name === 'member_info' || $name === 'support' || $name === 'pkg_1' || $name === 'pkg_2' || $name === 'pkg_3' || $name === 'consult' || $name === 'whatsapp') && newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
+        }
+      }
+    }
+  }
+}

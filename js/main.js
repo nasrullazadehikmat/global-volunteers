@@ -153,7 +153,16 @@
   COUNTRIES.forEach(function(c){ cEN2AZ[c[0]] = c[1]; });
   function cName(v){ return (L() === "az" && cEN2AZ[v]) ? cEN2AZ[v] : v; }
 
-  var state = { status: CONFIG.FIREBASE.databaseURL ? "loading" : "off", items: [], q: "", program: "", country: "", costs: "", expired: false, focus: "", scrolled: false, limit: 3 };
+  var state = { status: CONFIG.FIREBASE.databaseURL ? "loading" : "off", items: [], q: "", program: "", country: "", costs: "", expired: false, focus: "", scrolled: false, limit: 3, fav: false };
+  var favSet = {};
+  try { (JSON.parse(localStorage.getItem("gv-favs") || "[]") || []).forEach(function(id){ if (typeof id === "string") favSet[id] = 1; }); } catch(e){}
+  function saveFavs(){ try { localStorage.setItem("gv-favs", JSON.stringify(Object.keys(favSet))); } catch(e){} }
+  function favCount(){ return state.items.filter(function(p){ return favSet[p.id]; }).length; }
+  function favTxt(k){
+    var az = L() === "az";
+    return {lbl: az ? "Sevimlilərim" : "My favorites", add: az ? "Sevimlilərə əlavə et" : "Add to favorites", del: az ? "Sevimlilərdən çıxar" : "Remove from favorites",
+      none: az ? "Hələ sevimli layihə seçməmisiniz. Kartdakı ürək işarəsinə basın." : "No favorites yet. Tap the heart on a project card."}[k];
+  }
   var PAGE = 3, STEP = 6;
 
   function el(tag, cls, text){
@@ -214,6 +223,7 @@
     var q = state.q.trim().toLowerCase();
     return state.items.filter(function(p){
       if (p.id === state.focus) return true;
+      if (state.fav && !favSet[p.id]) return false;
       var dl = daysLeft(p.deadline);
       if (dl !== null && dl < 0 && !state.expired) return false;
       if (state.program && p.program !== state.program) return false;
@@ -248,6 +258,10 @@
     }
     if (exp) badges.appendChild(el("span", "badge", t("pj_expired")));
     c.appendChild(badges);
+    var hb = el("button", "fav-btn" + (favSet[p.id] ? " on" : ""), favSet[p.id] ? "♥" : "♡");
+    hb.type = "button"; hb.setAttribute("data-fav", p.id); hb.setAttribute("aria-pressed", favSet[p.id] ? "true" : "false");
+    hb.setAttribute("aria-label", favSet[p.id] ? favTxt("del") : favTxt("add")); hb.title = favSet[p.id] ? favTxt("del") : favTxt("add");
+    c.appendChild(hb);
     c.appendChild(el("h3", "prj-title", p.title));
 
     var meta = el("ul", "prj-meta");
@@ -313,7 +327,7 @@
     if (state.status === "loading") { count.textContent = t("pj_loading"); return; }
     if (state.status === "err") { count.textContent = t("pj_err"); return; }
     var items = visibleItems();
-    count.textContent = items.length ? fill(t("pj_found"), {n: items.length}) : (state.items.length ? t("pj_none_f") : t("pj_none"));
+    count.textContent = items.length ? fill(t("pj_found"), {n: items.length}) : (state.fav && !favCount() ? favTxt("none") : (state.items.length ? t("pj_none_f") : t("pj_none")));
     var lim = state.limit;
     if (state.focus) { for (var i = 0; i < items.length; i++) if (items[i].id === state.focus) { lim = Math.max(lim, i + 1); break; } }
     items.slice(0, lim).forEach(function(p){ list.appendChild(card(p)); });
@@ -332,6 +346,15 @@
     var pr = $("#prjProgram"); if (pr) pr.value = state.program;
     var co = $("#prjCosts"); if (co) co.value = state.costs;
     var ex = $("#prjExpired"); if (ex) ex.checked = state.expired;
+    var ff = $("#prjFavLbl");
+    if (!ff) {
+      var bar = $(".prj-filters");
+      if (bar) {
+        ff = el("label", "chk fav-chk"); ff.id = "prjFavLbl";
+        var cb = el("input"); cb.type = "checkbox"; cb.id = "prjFav"; ff.appendChild(cb); ff.appendChild(el("span")); bar.appendChild(ff);
+      }
+    }
+    if (ff) { $("#prjFav").checked = state.fav; $("span", ff).textContent = "♥ " + favTxt("lbl") + " (" + favCount() + ")"; }
     var cs = $("#prjCountry");
     if (cs) {
       while (cs.options.length > 1) cs.remove(1);
@@ -387,6 +410,7 @@
   }
   function renderProjects(){ syncControls(); renderList(); document.dispatchEvent(new CustomEvent("gv:render")); }
   window.GV = {
+    dbUrl: CONFIG.FIREBASE.databaseURL || "",
     items: function(){ return state.items; },
     status: function(){ return state.status; },
     lang: function(){ return L(); },
@@ -435,11 +459,27 @@
     else if (id === "prjCountry") state.country = e.target.value;
     else if (id === "prjCosts") state.costs = e.target.value;
     else if (id === "prjExpired") state.expired = e.target.checked;
+    else if (id === "prjFav") state.fav = e.target.checked;
     else return;
     state.focus = ""; state.limit = PAGE; renderList();
   });
   document.addEventListener("click", function(e){
     if (e.target.closest("#prjMore")) { state.limit += STEP; renderList(); return; }
+    var fv = e.target.closest("[data-fav]");
+    if (fv) {
+      var fid = fv.getAttribute("data-fav"), on = !favSet[fid];
+      if (on) { favSet[fid] = 1; if (window.GV && GV.track) GV.track("fav", fid); } else delete favSet[fid];
+      saveFavs();
+      if (state.fav) { renderList(); }
+      else {
+        $$('[data-fav="' + fid + '"]').forEach(function(b){
+          b.classList.toggle("on", on); b.textContent = on ? "♥" : "♡"; b.setAttribute("aria-pressed", on ? "true" : "false");
+          b.setAttribute("aria-label", on ? favTxt("del") : favTxt("add")); b.title = on ? favTxt("del") : favTxt("add");
+        });
+      }
+      var fl = $("#prjFavLbl"); if (fl) $("span", fl).textContent = "♥ " + favTxt("lbl") + " (" + favCount() + ")";
+      return;
+    }
     var cl = e.target.closest("[data-cal]");
     if (cl) {
       var pr = state.items.filter(function(x){ return x.id === cl.getAttribute("data-cal"); })[0];
@@ -479,6 +519,7 @@
     app.hidden = true; app.style.display = "none";
     document.title = "Admin — Global Volunteers";
     var rb = document.createElement("meta"); rb.name = "robots"; rb.content = "noindex,nofollow"; document.head.appendChild(rb);
+    try { localStorage.setItem("gv-notrack", "1"); } catch(e){}
     var root = el("div", "admin"); root.id = "adminRoot"; document.body.appendChild(root);
 
     function msg(text, isErr){ var m = $("#admMsg"); if (m) { m.textContent = text || ""; m.className = "adm-msg" + (isErr ? " err" : ""); } }
@@ -551,6 +592,7 @@
           '<div class="adm-actions" style="margin-top:12px;"><button type="button" class="adm-btn" id="admBulkCheck">Yoxla</button>' +
           '<button type="button" class="btn-primary" id="admBulkGo" disabled style="border:none;cursor:pointer;font-family:Inter,sans-serif;">Hamısını əlavə et</button></div>' +
           '<p class="adm-msg" id="admBulkMsg" role="status"></p></details>' +
+          '<details class="adm-card" id="admStatsBox"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Statistika</summary><div style="margin-top:14px;"><button type="button" class="adm-btn" id="admStatsReload">Yenilə</button></div><div id="admStats" style="margin-top:14px;">Açanda yüklənəcək…</div></details>' +
           '<section class="adm-card"><h2>Əlavə olunmuş layihələr (<span id="admCount">0</span>)</h2><div id="admList"></div></section>';
         $("#admWho").textContent = user.email || "";
         $("#admOut").addEventListener("click", function(){ authM.signOut(auth); });
@@ -610,6 +652,15 @@
           });
         }
 
+        function loadStats(){
+          var box = $("#admStats"); box.textContent = "Yüklənir…";
+          fs.get(fs.ref(db, "stats")).then(function(snap){
+            if (window.GV_renderStats) window.GV_renderStats(box, snap.exists() ? snap.val() : {}, rows);
+            else box.textContent = "js/admin-stats.js yüklənməyib.";
+          }).catch(function(){ box.textContent = "Statistikanı oxumaq mümkün olmadı. Firebase Rules-da «stats» qaydası əlavə olunub?"; });
+        }
+        $("#admStatsBox").addEventListener("toggle", function(){ if (this.open) loadStats(); });
+        $("#admStatsReload").addEventListener("click", loadStats);
         $("#admForm").addEventListener("submit", function(e){
           e.preventDefault();
           var data = {

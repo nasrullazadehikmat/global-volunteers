@@ -36,6 +36,8 @@ Global Volunteers puts everything in one place:
 - **"Deadlines this week"** strip listing projects that close within 7 days.
 - **"Get support"** button on every project (cards and map list) that opens WhatsApp with the project prefilled.
 - **Dark / light mode** — a toggle in the header (☾ / ☀); the choice is remembered, and without a choice the site follows the device setting.
+- **Favorites** — a heart on every project card; the choice is stored in the visitor's browser (no account) and a "My favorites" filter shows only those.
+- **Privacy-friendly counters** — total visits per day, project views, and clicks on "Dəstək al", "Üzv ol", packages and WhatsApp. No cookies and no personal data; the admin panel shows the numbers under *Statistika*. Needs the `stats` rules from `firebase-rules.json`.
 - **Animated boarding-pass hero** that rotates through European destinations.
 - **Contact form** that sends by e-mail (Formspree) or falls back to a ready-made WhatsApp message.
 - **Information dialogs:** Sending Organization membership, About us, FAQ, Terms and refunds, Privacy policy.
@@ -81,6 +83,8 @@ global-volunteers/
 ├── js/
 │   ├── main.js       # settings, language switch, project list, filters, admin panel
 │   ├── effects.js    # scroll animations, counters, boarding pass, package calculator
+│   ├── stats.js      # privacy-friendly counters (visitor side)
+│   ├── admin-stats.js # statistics view in the admin panel
 │   ├── theme.js      # dark / light mode toggle
 │   ├── extras.js     # Europe map, deadlines this week
 │   └── europe-map.js # simplified Natural Earth country shapes (generated)
@@ -107,6 +111,8 @@ Settings are at the top of `js/main.js` in the `CONFIG` object:
 - `FIREBASE` — Firebase project settings for the project list and admin panel.
 
 ### Database security rules
+
+The complete, current rules (projects + statistics counters) are in [`firebase-rules.json`](firebase-rules.json); replace `ADMIN_EMAIL` and paste them into Firebase → Realtime Database → Rules. The simplified example below shows the idea for projects only:
 
 The project list is public to read, but only one verified Google account can write:
 

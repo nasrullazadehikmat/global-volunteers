@@ -11,7 +11,7 @@
   var S = {
     az: {
       k: "KƏŞF ET", h: "Layihəni xəritədən tapın", p: "Ölkəni seçin — həmin ölkədəki açıq layihələri göstərək.",
-      mapT: "Layihələr xəritədə", mapHint: "Parlayan ölkələrdə açıq layihə var. Üzərinə klikləyin.",
+      mapT: "Layihələr xəritədə", mapHint: "Parlayan ölkələrdə açıq layihə var. Üzərinə klikləyin.", legOpen: "Açıq layihə var", legFly: "Bakıdan uçuş",
       from: "Bakı", proj: "layihə", none: "Bu ölkə üçün hazırda açıq layihə yoxdur.", pickC: "Ölkə seçin",
       details: "Detallara bax", support: "Dəstək al", all: "Hamısına bax", official: "Rəsmi səhifə",
       cal: "Təqvimə əlavə et", left: "gün qalıb", today: "Bu gün son gündür", noDl: "Son tarix qeyd olunmayıb",
@@ -19,7 +19,7 @@
     },
     en: {
       k: "EXPLORE", h: "Find a project on the map", p: "Pick a country and we'll show its open projects.",
-      mapT: "Projects on the map", mapHint: "Glowing countries have open projects. Click one.",
+      mapT: "Projects on the map", mapHint: "Glowing countries have open projects. Click one.", legOpen: "Open projects", legFly: "Flight from Baku",
       from: "Baku", proj: "projects", none: "No open projects for this country right now.", pickC: "Pick a country",
       details: "View details", support: "Get support", all: "See all", official: "Official page",
       cal: "Add to calendar", left: "days left", today: "Last day today", noDl: "No deadline listed",
@@ -80,30 +80,53 @@
 
     var stage = el("div", "gv-stage");
     var svg = sv("svg", {viewBox: "0 0 " + MAP.w + " " + MAP.h, "class": "gv-svg", role: "group", "aria-label": t.mapT});
-    var g = sv("g", {}), pins = sv("g", {"class": "gv-pins"}), fly = sv("g", {"class": "gv-fly"});
-    var i = 0, onMap = {};
+    var defs = sv("defs", {});
+    function grad(id, c1, c2){ var g0 = sv("linearGradient", {id: id, x1: 0, y1: 0, x2: 1, y2: 1}); g0.appendChild(sv("stop", {offset: "0", "stop-color": c1})); g0.appendChild(sv("stop", {offset: "1", "stop-color": c2})); defs.appendChild(g0); }
+    grad("gvG", "#9DBBFF", "#4C86FF"); grad("gvGD", "#4C74F0", "#2B4FCB");
+    var fl = sv("filter", {id: "gvGlow", x: "-30%", y: "-30%", width: "160%", height: "160%"});
+    fl.appendChild(sv("feDropShadow", {dx: 0, dy: 1.5, stdDeviation: 2.2, "flood-color": "#1F5EFF", "flood-opacity": ".55"}));
+    defs.appendChild(fl);
+    svg.appendChild(defs);
+    if (MAP.g) svg.appendChild(sv("path", {d: MAP.g, "class": "gv-grat"}));
+    var g = sv("g", {}), actives = sv("g", {"class": "gv-act"}), pins = sv("g", {"class": "gv-pins"}), fly = sv("g", {"class": "gv-fly"}), idle = sv("g", {"class": "gv-idle"}), lbls = sv("g", {"class": "gv-lbls"});
+    var i = 0, onMap = {}, ba = MAP.baku;
     MAP.c.forEach(function(c){
       var n = (by[c.k] || []).length;
       var p = sv("path", {d: c.d, "class": "gv-c" + (n ? " has" : "") + (sel === c.k ? " on" : ""), "data-k": c.k});
       if (n) {
         onMap[c.k] = 1;
-        p.style.animationDelay = (i++ * 60) + "ms";
+        p.style.animationDelay = (i * 70) + "ms";
         var pin = sv("g", {"class": "gv-pin", transform: "translate(" + c.c[0] + " " + c.c[1] + ")", "data-k": c.k});
         pin.appendChild(sv("circle", {"class": "ring", r: 5}));
         pin.appendChild(sv("circle", {"class": "dot", r: n > 1 ? 9 : 5.5}));
         if (n > 1) { var tx = sv("text", {"class": "num", y: 3.6, "text-anchor": "middle"}); tx.textContent = n; pin.appendChild(tx); }
-        pin.style.animationDelay = (i * 60) + "ms";
+        pin.style.animationDelay = (i * 70 + 200) + "ms";
         pins.appendChild(pin);
+        var lb = sv("text", {"class": "gv-lbl", x: c.c[0], y: c.c[1] + (n > 1 ? 21 : 18), "text-anchor": "middle"}); lb.textContent = GV.cName(c.k); lbls.appendChild(lb);
+        if (!reduce) {
+          var dx = c.c[0] - ba[0], dy = c.c[1] - ba[1], len = Math.sqrt(dx * dx + dy * dy) || 1;
+          var qx = (ba[0] + c.c[0]) / 2 + dy / len * len * 0.18 * (dx > 0 ? 1 : -1), qy = (ba[1] + c.c[1]) / 2 - Math.abs(dx / len) * len * 0.18 - 10;
+          var pid = "gvA" + i;
+          idle.appendChild(sv("path", {id: pid, d: "M" + ba[0] + " " + ba[1] + " Q" + qx.toFixed(1) + " " + qy.toFixed(1) + " " + c.c[0] + " " + c.c[1], "class": "gv-idle-arc"}));
+          var pl = sv("text", {"class": "gv-idle-plane", "text-anchor": "middle", "dominant-baseline": "central"}); pl.textContent = "✈";
+          var am = sv("animateMotion", {dur: (5 + (i % 4) * 1.3).toFixed(1) + "s", repeatCount: "indefinite", rotate: "auto", begin: (i * 0.9).toFixed(1) + "s", keyPoints: "0;1", keyTimes: "0;1", calcMode: "linear"});
+          am.appendChild(sv("mpath", {href: "#" + pid})); pl.appendChild(am); idle.appendChild(pl);
+        }
+        i++;
       }
       g.appendChild(p);
     });
-    svg.appendChild(g); svg.appendChild(fly); svg.appendChild(pins);
-    var b = sv("g", {"class": "gv-baku", transform: "translate(" + MAP.baku[0] + " " + MAP.baku[1] + ")"});
-    b.appendChild(sv("circle", {r: 4.5})); var bt = sv("text", {x: 8, y: 4}); bt.textContent = t.from; b.appendChild(bt);
+    svg.appendChild(g); svg.appendChild(idle); svg.appendChild(fly); svg.appendChild(pins); svg.appendChild(lbls);
+    var b = sv("g", {"class": "gv-baku", transform: "translate(" + ba[0] + " " + ba[1] + ")"});
+    b.appendChild(sv("circle", {"class": "bring", r: 5})); b.appendChild(sv("circle", {r: 4.5}));
+    var bt = sv("text", {x: 9, y: 4}); bt.textContent = t.from; b.appendChild(bt);
     svg.appendChild(b);
     stage.appendChild(svg);
     var tip = el("div", "gv-tip"); tip.id = "gvTip"; tip.hidden = true; stage.appendChild(tip);
     box.appendChild(stage);
+    var lg = el("div", "gv-legend");
+    lg.innerHTML = '<span><i class="lg1"></i>' + t.legOpen + '</span><span><i class="lg2"></i>' + t.from + '</span><span><i class="lg3">✈</i>' + t.legFly + '</span>';
+    box.appendChild(lg);
 
     /* hamısı üçün çiplər (xəritədə olmayanlar da daxil) */
     var chips = el("div", "gv-chips"); chips.setAttribute("role", "group"); chips.setAttribute("aria-label", t.pickC);
@@ -119,7 +142,7 @@
   }
 
   function miniCard(p){
-    var c = el("div", "gv-mini");
+    var c = el("div", "gv-mini"); c.setAttribute("data-pid", p.id);
     var top = el("div", "gv-mini-top");
     top.appendChild(el("b", null, p.title));
     top.appendChild(el("span", "gv-when", leftTxt(p)));
