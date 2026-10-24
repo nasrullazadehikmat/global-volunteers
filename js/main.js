@@ -20,7 +20,7 @@
   /* ================================================================== */
 
   var LOGO = "images/logo-icon.png", LOGO_FULL = "images/logo.png";
-  var I18N = {"az": {"pj_member": "Üzv ol", "member_wa": "Salam%21%20Sending%20Organization%20%C3%BCzvl%C3%BCy%C3%BC%20il%C9%99%20maraqlan%C4%B1ram%2C%20%C3%BCzv%20olmaq%20ist%C9%99yir%C9%99m%20%F0%9F%99%82", "slots": "Bu ay qalan yer: <b>{n}<\/b>", "ok": "Təşəkkür edirik! Müraciətiniz göndərildi, tezliklə sizinlə əlaqə saxlayacağıq.", "err": "Göndərmək alınmadı. Zəhmət olmasa WhatsApp ilə yazın.", "wa": "WhatsApp açılır — mesajı göndərməyi unutmayın.", "wa_text": "Salam! Qısa müraciət:\nAd: {name}\nYaş: {age}\nMaraq: {interest}\nPaket: {pkg}\nƏlaqə: {contact}", "pj_loading": "Layihələr yüklənir…", "pj_err": "Layihələri yükləmək alınmadı. Səhifəni yeniləyin.", "pj_none": "Hələlik layihə əlavə olunmayıb.", "pj_none_f": "Seçdiyiniz filtrlərə uyğun layihə tapılmadı.", "pj_more_btn": "Daha çox göstər ({n})", "pj_found": "{n} layihə tapıldı", "pj_country": "Ölkə", "pj_deadline": "Son tarix", "pj_dates": "Tarixlər", "pj_left": "{n} gün qalıb", "pj_today": "Bu gün son gün", "pj_expired": "Bitib", "pj_official": "Rəsmi linkə bax", "pj_copy": "Linki kopyala", "pj_copied": "Link kopyalandı", "pj_copy_fail": "Kopyalamaq alınmadı", "pj_wa": "WhatsApp-a göndər", "pj_more": "Daha çox", "pj_less": "Daha az", "pj_so": "Layihələrə müraciət etmək üçün Sending Organization tələb olunur.", "pj_so_more": "Ətraflı", "pj_wa_text": "Salam! Bu layihəyə müraciət etmək istəyirəm:\n{title}\nSon tarix: {deadline}\n{link}", "cost_full": "Tam qarşılanır", "cost_partial": "Qismən qarşılanır", "cost_none": "Qarşılanmır", "ap_show": "Form yaz", "ap_hide": "Formu gizlət"}, "en": {"pj_member": "Become a member", "member_wa": "Hello%21%20I%27d%20like%20to%20become%20a%20member%20%28Sending%20Organization%29.%20Could%20you%20tell%20me%20how%3F%20%F0%9F%99%82", "slots": "Spots left this month: <b>{n}<\/b>", "ok": "Thank you! Your request has been sent — we will contact you soon.", "err": "Sending failed. Please message us on WhatsApp instead.", "wa": "Opening WhatsApp — please remember to send the message.", "wa_text": "Hello! Quick request:\nName: {name}\nAge: {age}\nInterest: {interest}\nPackage: {pkg}\nContact: {contact}", "pj_loading": "Loading projects…", "pj_err": "Could not load the projects. Please refresh the page.", "pj_none": "No projects have been added yet.", "pj_none_f": "No projects match your filters.", "pj_more_btn": "Show more ({n})", "pj_found": "{n} projects found", "pj_country": "Country", "pj_deadline": "Deadline", "pj_dates": "Dates", "pj_left": "{n} days left", "pj_today": "Last day today", "pj_expired": "Expired", "pj_official": "Official page", "pj_copy": "Copy link", "pj_copied": "Link copied", "pj_copy_fail": "Could not copy", "pj_wa": "Send on WhatsApp", "pj_more": "Read more", "pj_less": "Read less", "pj_so": "A Sending Organization is required to apply to projects.", "pj_so_more": "Learn more", "pj_wa_text": "Hello! I would like to apply to this project:\n{title}\nDeadline: {deadline}\n{link}", "cost_full": "Fully covered", "cost_partial": "Partially covered", "cost_none": "Not covered", "ap_show": "Write a request", "ap_hide": "Hide the form"}};
+  var I18N = {"az": {"pj_member": "Üzv ol", "member_wa": "Salam%21%20Sending%20Organization%20%C3%BCzvl%C3%BCy%C3%BC%20il%C9%99%20maraqlan%C4%B1ram%2C%20%C3%BCzv%20olmaq%20ist%C9%99yir%C9%99m%20%F0%9F%99%82", "slots": "Bu ay qalan yer: <b>{n}<\/b>", "ok": "Təşəkkür edirik! Müraciətiniz göndərildi, tezliklə sizinlə əlaqə saxlayacağıq.", "err": "Göndərmək alınmadı. Zəhmət olmasa WhatsApp ilə yazın.", "wa": "WhatsApp açılır — mesajı göndərməyi unutmayın.", "wa_text": "Salam! Qısa müraciət:\nAd: {name}\nYaş: {age}\nMaraq: {interest}\nPaket: {pkg}\nƏlaqə: {contact}", "pj_loading": "Layihələr yüklənir…", "pj_err": "Layihələri yükləmək alınmadı. Səhifəni yeniləyin.", "pj_none": "Hələlik layihə əlavə olunmayıb.", "pj_none_f": "Seçdiyiniz filtrlərə uyğun layihə tapılmadı.", "pj_more_btn": "Daha çox göstər ({n})", "pj_found": "{n} layihə tapıldı", "pj_country": "Ölkə", "pj_deadline": "Son tarix", "pj_dates": "Tarixlər", "pj_left": "{n} gün qalıb", "pj_today": "Bu gün son gün", "pj_expired": "Bitib", "pj_official": "Rəsmi linkə bax", "pj_copy": "Linki kopyala", "pj_copied": "Link kopyalandı", "pj_copy_fail": "Kopyalamaq alınmadı", "pj_wa": "WhatsApp-a göndər", "pj_more": "Daha çox", "pj_less": "Daha az", "pj_so": "Layihələrə müraciət etmək üçün Sending Organization tələb olunur.", "pj_so_more": "Ətraflı", "prog_other": "Digər", "pj_fee": "Application fee", "pj_wa_text": "Salam! Bu layihəyə müraciət etmək istəyirəm:\n{title}\nSon tarix: {deadline}\n{link}", "cost_full": "Tam qarşılanır", "cost_partial": "Qismən qarşılanır", "cost_none": "Qarşılanmır", "ap_show": "Form yaz", "ap_hide": "Formu gizlət"}, "en": {"pj_member": "Become a member", "member_wa": "Hello%21%20I%27d%20like%20to%20become%20a%20member%20%28Sending%20Organization%29.%20Could%20you%20tell%20me%20how%3F%20%F0%9F%99%82", "slots": "Spots left this month: <b>{n}<\/b>", "ok": "Thank you! Your request has been sent — we will contact you soon.", "err": "Sending failed. Please message us on WhatsApp instead.", "wa": "Opening WhatsApp — please remember to send the message.", "wa_text": "Hello! Quick request:\nName: {name}\nAge: {age}\nInterest: {interest}\nPackage: {pkg}\nContact: {contact}", "pj_loading": "Loading projects…", "pj_err": "Could not load the projects. Please refresh the page.", "pj_none": "No projects have been added yet.", "pj_none_f": "No projects match your filters.", "pj_more_btn": "Show more ({n})", "pj_found": "{n} projects found", "pj_country": "Country", "pj_deadline": "Deadline", "pj_dates": "Dates", "pj_left": "{n} days left", "pj_today": "Last day today", "pj_expired": "Expired", "pj_official": "Official page", "pj_copy": "Copy link", "pj_copied": "Link copied", "pj_copy_fail": "Could not copy", "pj_wa": "Send on WhatsApp", "pj_more": "Read more", "pj_less": "Read less", "pj_so": "A Sending Organization is required to apply to projects.", "pj_so_more": "Learn more", "prog_other": "Other", "pj_fee": "Application fee", "pj_wa_text": "Hello! I would like to apply to this project:\n{title}\nDeadline: {deadline}\n{link}", "cost_full": "Fully covered", "cost_partial": "Partially covered", "cost_none": "Not covered", "ap_show": "Write a request", "ap_hide": "Hide the form"}};
   var META = {"az": {"title": "Global Volunteers — Erasmus+ Dəstək Paketləri", "desc": "Erasmus+ layihələrinə müraciət dəstəyi: profilə uyğun layihə seçimi, fərdi motivasiya məktubu və viza dəstəyi. Yekun ödəniş yalnız qəbul olduqda."}, "en": {"title": "Global Volunteers — Erasmus+ Support Packages", "desc": "Application support for Erasmus+ projects: project matching, a personal motivation letter and visa support. The final payment is due only if you are accepted."}};
   var $ = function(s, r){ return (r||document).querySelector(s); };
   var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
@@ -211,7 +211,8 @@
           items.push({
             id: id, title: str(f.title), program: str(f.program), country: str(f.country),
             deadline: str(f.deadline), start: str(f.startDate), end: str(f.endDate),
-            link: str(f.link), costs: str(f.costs), about: str(f.about)
+            link: str(f.link), costs: str(f.costs), about: str(f.about),
+            sendingOrg: f.sendingOrg !== false, appFee: f.appFee === true, appFeeAmount: str(f.appFeeAmount)
           });
         });
       }
@@ -252,7 +253,7 @@
     var c = el("article", "prj" + (exp ? " expired" : "") + (p.id === state.focus ? " hl" : ""));
     c.id = "p-" + p.id;
     var badges = el("div", "prj-badges");
-    badges.appendChild(el("span", "badge prog", p.program === "ESC" ? "ESC" : "SALTO Youth"));
+    badges.appendChild(el("span", "badge prog", p.program === "ESC" ? "ESC" : p.program === "OTHER" ? t("prog_other") : "SALTO Youth"));
     if (p.costs === "full" || p.costs === "partial" || p.costs === "none") {
       badges.appendChild(el("span", "badge cost-" + p.costs, t("cost_" + p.costs)));
     }
@@ -285,15 +286,21 @@
       }
     }
 
-    var note = el("p", "prj-note");
-    note.appendChild(document.createTextNode("ⓘ " + t("pj_so") + " "));
-    var nb = el("button", "linklike", t("pj_so_more"));
-    nb.type = "button"; nb.setAttribute("data-open", "sendingOrgModal");
-    note.appendChild(nb);
-    var mem = el("a", "linklike member-link", "★ " + t("pj_member"));
-    mem.href = "https://wa.me/" + CONFIG.WA_NUMBER + "?text=" + t("member_wa"); mem.target = "_blank"; mem.rel = "noopener";
-    note.appendChild(document.createTextNode(" ")); note.appendChild(mem);
-    c.appendChild(note);
+    if (p.sendingOrg) {
+      var note = el("p", "prj-note");
+      note.appendChild(document.createTextNode("ⓘ " + t("pj_so") + " "));
+      var nb = el("button", "linklike", t("pj_so_more"));
+      nb.type = "button"; nb.setAttribute("data-open", "sendingOrgModal");
+      note.appendChild(nb);
+      var mem = el("a", "linklike member-link", "★ " + t("pj_member"));
+      mem.href = "https://wa.me/" + CONFIG.WA_NUMBER + "?text=" + t("member_wa"); mem.target = "_blank"; mem.rel = "noopener";
+      note.appendChild(document.createTextNode(" ")); note.appendChild(mem);
+      c.appendChild(note);
+    }
+    if (p.appFee) {
+      var fee = el("p", "prj-note prj-fee", "💶 " + t("pj_fee") + (p.appFeeAmount ? ": " + p.appFeeAmount : ""));
+      c.appendChild(fee);
+    }
 
     var act = el("div", "prj-actions");
     var u = safeUrl(p.link);
@@ -575,15 +582,19 @@
           '<a class="adm-btn" href="./" style="margin-right:8px;">Sayta bax</a><button type="button" class="adm-btn" id="admOut">Çıxış</button></div></header>' +
           '<form id="admForm" class="adm-card" autocomplete="off"><h2 id="admFormTitle">Yeni layihə</h2><div class="adm-grid">' +
           '<div class="field full"><label for="a-title">Başlıq *</label><input id="a-title" type="text" required maxlength="200"></div>' +
-          '<div class="field"><label for="a-program">Proqram *</label><select id="a-program" required><option value="">Seçin…</option><option value="SALTO">SALTO Youth</option><option value="ESC">ESC</option></select></div>' +
+          '<div class="field"><label for="a-program">Proqram *</label><select id="a-program" required><option value="">Seçin…</option><option value="SALTO">SALTO Youth</option><option value="ESC">ESC</option><option value="OTHER">Digər</option></select></div>' +
           '<div class="field"><label for="a-country">Ölkə *</label><input id="a-country" type="text" list="a-countries" required maxlength="80" placeholder="məs. Germany və ya Almaniya"><datalist id="a-countries">' + opts + '</datalist></div>' +
           '<div class="field"><label for="a-deadline">Deadline *</label><input id="a-deadline" type="date" required></div>' +
           '<div class="field"><label for="a-costs">Xərclər *</label><select id="a-costs" required><option value="">Seçin…</option><option value="full">Tam qarşılanır</option><option value="partial">Qismən qarşılanır</option><option value="none">Qarşılanmır</option></select></div>' +
           '<div class="field"><label for="a-start">Başlama tarixi *</label><input id="a-start" type="date" required></div>' +
           '<div class="field"><label for="a-end">Bitmə tarixi *</label><input id="a-end" type="date" required></div>' +
           '<div class="field full"><label for="a-link">Rəsmi link *</label><input id="a-link" type="url" required maxlength="500" placeholder="https://www.salto-youth.net/..."></div>' +
-          '<div class="field full"><label for="a-about">Haqqında</label><textarea id="a-about" maxlength="3000"></textarea></div></div>' +
-          '<p class="adm-note">ℹ️ Hər layihənin kartında avtomatik yazılacaq: «Layihələrə müraciət etmək üçün Sending Organization tələb olunur.»</p>' +
+          '<div class="field full"><label for="a-about">Haqqında</label><textarea id="a-about" maxlength="3000"></textarea></div>' +
+          '<div class="field full"><label>Kartda göstərilənlər</label><div class="adm-toggles">' +
+          '<button type="button" class="adm-toggle" id="a-so" aria-pressed="true">Sending Organization tələb olunur</button>' +
+          '<button type="button" class="adm-toggle" id="a-fee" aria-pressed="false">Application fee var</button>' +
+          '<input id="a-feeamt" type="text" maxlength="40" placeholder="Məbləğ (məs. 20 €)" aria-label="Application fee məbləği"></div></div></div>' +
+          '<p class="adm-note">ℹ️ «Sending Organization» düyməsi aktiv olanda kartda «Layihələrə müraciət etmək üçün Sending Organization tələb olunur.» yazılır, aktiv deyilsə yazılmır. ESC və SALTO Youth seçəndə o həmişə aktivdir, Application fee isə olmur. «Digər» seçəndə hər ikisini özünüz seçirsiniz.</p>' +
           '<div class="adm-actions"><button type="submit" class="btn-primary" id="admSave" style="border:none;cursor:pointer;font-family:Inter,sans-serif;">Əlavə et</button>' +
           '<button type="button" class="adm-btn" id="admCancel" hidden>Ləğv et</button></div><p class="adm-msg" id="admMsg" role="status"></p></form>' +
           '<details class="adm-card" id="admBulk"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Toplu əlavə et (JSON)</summary>' +
@@ -600,8 +611,27 @@
         var editing = null, rows = [];
         var ids = ["title", "program", "country", "deadline", "costs", "start", "end", "link", "about"];
         function f(n){ return $("#a-" + n); }
+        function progLabel(v){ return v === "ESC" ? "ESC" : v === "OTHER" ? "Digər" : "SALTO Youth"; }
+        function tog(id, on){
+          var b = $("#" + id);
+          if (on === undefined) return b.getAttribute("aria-pressed") === "true";
+          b.setAttribute("aria-pressed", on ? "true" : "false");
+        }
+        function syncProg(){
+          var other = f("program").value === "OTHER", so = $("#a-so"), fee = $("#a-fee"), amt = $("#a-feeamt");
+          if (!other) { tog("a-so", true); tog("a-fee", false); }
+          so.disabled = !other; fee.disabled = !other;
+          var feeOn = other && tog("a-fee");
+          amt.hidden = !feeOn; amt.disabled = !feeOn;
+          if (!feeOn) amt.value = "";
+        }
+        ["a-so", "a-fee"].forEach(function(id){
+          $("#" + id).addEventListener("click", function(){ if (this.disabled) return; tog(id, !tog(id)); syncProg(); });
+        });
+        f("program").addEventListener("change", syncProg);
+        syncProg();
         function reset(){
-          editing = null; $("#admForm").reset();
+          editing = null; $("#admForm").reset(); tog("a-so", true); tog("a-fee", false); syncProg();
           $("#admFormTitle").textContent = "Yeni layihə"; $("#admSave").textContent = "Əlavə et"; $("#admCancel").hidden = true;
         }
         $("#admCancel").addEventListener("click", function(){ reset(); msg(""); });
@@ -628,7 +658,7 @@
           rows.forEach(function(r){
             var row = el("div", "adm-row"), info = el("div");
             info.appendChild(el("b", null, r.title || "(başlıqsız)"));
-            info.appendChild(el("small", null, (r.program === "ESC" ? "ESC" : "SALTO Youth") + " · " + (r.country || "—") + " · Deadline: " + (r.deadline || "—")));
+            info.appendChild(el("small", null, progLabel(r.program) + " · " + (r.country || "—") + " · Deadline: " + (r.deadline || "—")));
             var act = el("div", "adm-actions");
             var e1 = el("button", "adm-btn", "Redaktə"); e1.type = "button";
             var e2 = el("button", "adm-btn danger", "Sil"); e2.type = "button";
@@ -637,6 +667,7 @@
               f("title").value = r.title || ""; f("program").value = r.program || ""; f("country").value = r.country || "";
               f("deadline").value = r.deadline || ""; f("costs").value = r.costs || ""; f("start").value = r.startDate || "";
               f("end").value = r.endDate || ""; f("link").value = r.link || ""; f("about").value = r.about || "";
+              tog("a-so", r.sendingOrg !== false); tog("a-fee", r.appFee === true); syncProg(); f("feeamt").value = r.appFeeAmount || "";
               $("#admFormTitle").textContent = "Layihəni redaktə et"; $("#admSave").textContent = "Yadda saxla"; $("#admCancel").hidden = false;
               msg(""); window.scrollTo({top: 0, behavior: "smooth"}); f("title").focus({preventScroll: true});
             });
@@ -668,6 +699,9 @@
             deadline: f("deadline").value, startDate: f("start").value, endDate: f("end").value,
             link: f("link").value.trim(), costs: f("costs").value, about: f("about").value.trim()
           };
+          data.sendingOrg = data.program === "OTHER" ? tog("a-so") : true;
+          data.appFee = data.program === "OTHER" ? tog("a-fee") : false;
+          data.appFeeAmount = data.appFee ? f("feeamt").value.trim() : "";
           if (!data.title || !data.program || !data.country || !data.deadline || !data.startDate || !data.endDate || !data.link || !data.costs) { msg("Ulduzlu sahələrin hamısını doldurun.", true); return; }
           if (!/^https?:\/\//i.test(data.link)) { msg("Link http:// və ya https:// ilə başlamalıdır.", true); return; }
           if (data.endDate < data.startDate) { msg("Bitmə tarixi başlama tarixindən əvvəl ola bilməz.", true); return; }
@@ -710,14 +744,19 @@
             if (!x || typeof x !== "object") { out.errors.push(n + "obyekt deyil"); return; }
             var p = String(x.program || "").trim().toUpperCase();
             if (p === "SALTO YOUTH" || p === "SALTO-YOUTH") p = "SALTO";
+            if (p === "DIGƏR" || p === "DIGER" || p === "OTHER") p = "OTHER";
+            function yes(v){ return v === true || String(v).trim().toLowerCase() === "true"; }
             var o = {
               title: String(x.title || "").trim(), program: p, country: normCountry(String(x.country || "")),
               deadline: String(x.deadline || "").trim(), startDate: String(x.startDate || "").trim(), endDate: String(x.endDate || "").trim(),
               link: String(x.link || "").trim(), costs: String(x.costs || "").trim().toLowerCase(), about: String(x.about || "").trim()
             };
+            o.sendingOrg = p === "OTHER" && x.sendingOrg !== undefined ? yes(x.sendingOrg) : true;
+            o.appFee = p === "OTHER" && yes(x.appFee);
+            o.appFeeAmount = o.appFee ? String(x.appFeeAmount || "").trim() : "";
             if (!o.title) er.push("title yoxdur");
             if (!o.country) er.push("country yoxdur");
-            if (p !== "SALTO" && p !== "ESC") er.push("program SALTO və ya ESC olmalıdır");
+            if (p !== "SALTO" && p !== "ESC" && p !== "OTHER") er.push("program SALTO, ESC və ya OTHER olmalıdır");
             ["deadline", "startDate", "endDate"].forEach(function(k){ if (!D.test(o[k])) er.push(k + " YYYY-MM-DD olmalıdır"); });
             if (D.test(o.startDate) && D.test(o.endDate) && o.endDate < o.startDate) er.push("endDate startDate-dən əvvəldir");
             if (!/^https?:\/\//i.test(o.link)) er.push("link http(s) olmalıdır");

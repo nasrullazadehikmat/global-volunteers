@@ -378,6 +378,12 @@
   .adm-btn{font:inherit;font-size:0.88rem;font-weight:600;padding:9px 16px;border-radius:3px;border:1px solid var(--ink);background:none;color:var(--ink);cursor:pointer;text-decoration:none;display:inline-block;}
   .adm-btn.danger{border-color:#B3402E;color:#B3402E;}
   .adm-note{font-size:0.85rem;color:var(--ink-soft);background:rgba(215,154,59,0.1);border:1px solid rgba(215,154,59,0.35);border-radius:6px;padding:10px 12px;margin:0 0 16px;}
+  .adm-toggles{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .adm-toggle{font:inherit;font-size:0.88rem;font-weight:600;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--ink-soft);cursor:pointer;}
+  .adm-toggle[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff;}
+  .adm-toggle:disabled{opacity:.55;cursor:not-allowed;}
+  #a-feeamt{max-width:200px;}
+  .prj-fee{margin-top:8px;font-weight:600;}
   .adm-actions{display:flex;gap:10px;flex-wrap:wrap;}
   .adm-msg{white-space:pre-line;min-height:1.4em;font-size:0.9rem;color:var(--teal);margin:14px 0 0;}
   .adm-msg.err{color:#B3402E;}
