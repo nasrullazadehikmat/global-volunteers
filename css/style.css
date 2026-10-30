@@ -759,10 +759,8 @@
   .ph-tag{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:999px;background:var(--cream);color:var(--ink-soft);}
   .esc-phase.after .ph-tag{background:var(--gold);color:#0A1B4D;}
   .esc-steps{list-style:none;margin:12px 0 0;padding:0;counter-reset:es;}
-  .esc-step{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:13px 0;border-top:1px solid var(--line);}
+  .esc-step{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:16px 0;border-top:1px solid var(--line);}
   .esc-step:first-child{border-top:none;}
-  .esc-step::before{counter-increment:es;content:counter(es);width:30px;height:30px;border-radius:50%;background:rgba(31,94,255,.12);color:var(--teal);font-weight:800;font-size:.84rem;display:grid;place-items:center;}
-  .esc-phase.after .esc-step::before{content:"✓";background:var(--teal);color:var(--on-teal);}
   .st-t{font-weight:700;font-size:.96rem;line-height:1.4;padding-top:4px;}
   .st-d{font-size:.84rem;color:var(--ink-soft);line-height:1.5;margin-top:3px;}
   .esc-more{margin-top:8px;}
@@ -777,6 +775,29 @@
   .esc-btn b{font-weight:800;}
   .esc-btn svg{flex:none;width:14px;height:14px;}
   .esc-btn:hover,.esc-btn:focus-visible{background:var(--teal);color:var(--on-teal);transform:translateY(-1px);}
+
+  /* ESC "daxildir" – zəngin görünüş */
+  .esc-incl-head p{margin:10px 0 0;color:var(--ink-soft);font-size:.98rem;line-height:1.6;max-width:62ch;}
+  .esc-chips{list-style:none;margin:0 0 24px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:900px){.esc-chips{grid-template-columns:1fr;}}
+  .esc-chips li{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-weight:700;font-size:.9rem;line-height:1.35;box-shadow:0 14px 30px -26px rgba(10,27,77,.5);}
+  .ch-i{flex:none;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,rgba(31,94,255,.16),rgba(255,197,49,.28));display:grid;place-items:center;font-size:1.2rem;}
+  .st-ic{width:40px;height:40px;border-radius:12px;background:rgba(31,94,255,.12);display:grid;place-items:center;font-size:1.15rem;}
+  .st-ic.ok{background:rgba(255,197,49,.25);}
+  .esc-phase{padding:24px 26px 10px;box-shadow:0 24px 50px -38px rgba(10,27,77,.55);}
+  .esc-phase .ph-top{padding-bottom:0;}
+  .esc-phase .esc-steps{margin-top:2px;}
+  .esc-phase .ph-top h4{margin:0;}
+  .esc-more{margin:12px 0 0;}
+  .esc-more p{border-left:3px solid var(--gold);border-radius:4px 12px 12px 4px;}
+  .esc-svc{margin-top:12px;border:1.5px dashed rgba(31,94,255,.45);background:rgba(31,94,255,.06);border-radius:16px;padding:14px 16px;}
+  .svc-t{font-weight:800;font-size:.92rem;}
+  .svc-d{font-size:.82rem;color:var(--ink-soft);margin-top:2px;}
+  .svc-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px;}
+  .svc-p{font-size:.86rem;color:var(--ink-soft);}
+  .svc-p b{font-size:1.5rem;font-weight:800;color:var(--ink);letter-spacing:-.01em;}
+  .esc-svc .esc-btn{background:var(--teal);color:var(--on-teal);}
+  .esc-svc .esc-btn:hover,.esc-svc .esc-btn:focus-visible{filter:brightness(1.08);background:var(--teal);color:var(--on-teal);}
 
   /* ===== SAYT AXTARIŞI ===== */
   .search-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:var(--gold);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;padding:0;flex:none;}
