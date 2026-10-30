@@ -423,6 +423,7 @@
     lang: function(){ return L(); },
     cName: cName, waProject: waProject, daysLeft: daysLeft, fmtDay: fmtDay, safeUrl: safeUrl, projectUrl: projectUrl, toast: toast, copyText: copyText,
     downloadICS: downloadICS,
+    openModal: openModal,
     filterCountry: function(c){
       state.country = c || ""; state.focus = ""; state.limit = PAGE; renderProjects();
       var n = document.getElementById("prjList"); if (n) n.scrollIntoView({behavior: "smooth", block: "start"});

@@ -36,6 +36,7 @@
       <a href="#elaqe">Əlaqə</a>
     </nav>
     <div class="nav-right">
+      <button type="button" class="search-btn" data-search-open aria-label="Saytda axtar" title="Axtar ( / )"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
       <button type="button" class="theme-btn" data-theme-toggle aria-label="Tünd rejimə keç">☾</button>
       <div class="lang" role="group" aria-label="Dil seçimi"><button type="button" data-set-lang="az" lang="az" aria-current="true">AZ</button><button type="button" data-set-lang="en" lang="en">EN</button></div>
       <a class="nav-cta member" data-wa="main" href="https://wa.me/994706386353?text=Salam%21%20Sending%20Organization%20%C3%BCzvl%C3%BCy%C3%BC%20il%C9%99%20maraqlan%C4%B1ram%2C%20%C3%BCzv%20olmaq%20ist%C9%99yir%C9%99m%20%F0%9F%99%82" target="_blank" rel="noopener">★ Üzv ol</a>
@@ -86,7 +87,7 @@
       <div class="member-body">
         <div class="k">SENDING ORGANIZATION</div>
         <h2 id="memH">Layihələrə müraciət üçün əvvəlcə üzv olun</h2>
-        <p>Erasmus+ layihələri Göndərən Təşkilat (Sending Organization) tələb edir. 6 aylıq və ya 1 illik üzvlüklə istənilən sayda layihəyə müraciət edə bilərsiniz. Qiymət və ətraflı məlumat üçün bizə yazın.</p>
+        <p>SALTO Youth və digər Erasmus+ layihələri müraciət zamanı Göndərən Təşkilat (Sending Organization) tələb edir; ESC layihələrində isə müraciət üçün tələb olunmur, yalnız qəbuldan sonra lazım olur. 6 aylıq və ya 1 illik üzvlüklə istənilən sayda layihəyə müraciət edə bilərsiniz. Qiymət və ətraflı məlumat üçün bizə yazın.</p>
         <ul class="member-points"><li>6 ay və ya 1 il müddətinə</li><li>İstənilən sayda layihə</li><li>Fərdi dəstək</li></ul>
       </div>
       <div class="member-actions">
@@ -138,7 +139,7 @@
   </div>
   <div class="wrap">
     <div class="steps">
-      <div class="step"><div class="n">01</div><h3>Paket seçirsiniz</h3><p>Standard, Premium və ya VIP — neçə layihəyə müraciət etmək istədiyinizə görə seçim edirsiniz.</p></div>
+      <div class="step"><div class="n">01</div><h3>Proqram və paket seçirsiniz</h3><p>ESC və ya SALTO Youth, sonra Standard, Premium və ya VIP — neçə layihəyə müraciət etmək istədiyinizə görə seçim edirsiniz.</p></div>
       <div class="step"><div class="n">02</div><h3>Layihə tapılır</h3><p>Profilinizə və maraqlarınıza uyğun Erasmus+ layihələrini araşdırıb seçirik.</p></div>
       <div class="step"><div class="n">03</div><h3>Müraciət hazırlanır</h3><p>Fərdi Motivation Text yazılır və müraciətiniz bizim tərəfimizdən təqdim olunur.</p></div>
       <div class="step"><div class="n">04</div><h3>Viza və hazırlıq</h3><p>Qəbul cavabından sonra viza sənədləri və müsahibə üçün sizi hazırlayırıq.</p></div>
@@ -151,9 +152,139 @@
     <div class="section-head">
       <div class="k">PAKETLƏR</div>
       <h2>Profilinizə uyğun dəstək səviyyəsini seçin</h2>
-      <p>Hər paketə fərdi Motivation Text, müraciətin təqdim olunması və viza dəstəyi daxildir.</p>
+      <p>Əvvəlcə proqramı, sonra sizə uyğun paketi seçin. Hər paketə fərdi motivasiya məktubu və müraciətin təqdim olunması daxildir.</p>
     </div>
     <div class="urgency-note" id="slotsNote">⚠️ <span id="slotsText">Qeyd: Keyfiyyətli motivasiya məktubları yazmaq və hər bir müraciətçiyə fərdi vaxt ayırmaq üçün <b>aylıq müraciət limitimiz məhduddur</b>.</span></div>
+    <div class="prog-pick" role="tablist" aria-label="Proqram seçimi">
+      <button type="button" role="tab" class="prog-tab" id="tab-esc" data-prog="esc" aria-selected="true" aria-controls="panel-esc">
+        <span class="pt-top"><span class="pt-name">ESC</span><span class="pt-tag">Könüllülük</span></span>
+        <span class="pt-sub">Avropa Həmrəylik Korpusu</span>
+        <span class="pt-text">18–30 yaş arası gənclər üçün Avropada sosial, ekoloji və mədəni layihələrdə könüllülük proqramıdır. Qısamüddətli (2 həftə – 2 ay) və ya uzunmüddətli (2 – 12 ay) olur; gediş-gəliş, yaşayış, sığorta və cib xərcləri tam qarşılanır. İştirak etdiyiniz layihənin ümumi müddəti 1 ildən artıq ola bilməz.</span>
+      </button>
+      <button type="button" role="tab" class="prog-tab" id="tab-salto" data-prog="salto" aria-selected="false" aria-controls="panel-salto">
+        <span class="pt-top"><span class="pt-name">SALTO Youth</span><span class="pt-tag">Təlim kursları</span></span>
+        <span class="pt-sub">Gənclər üçün resurs şəbəkəsi</span>
+        <span class="pt-text">Gənclər sahəsində çalışanlar, təlimçilər və fəal gənclər üçün nəzərdə tutulmuş resurs şəbəkəsidir. Beynəlxalq təlim kursları, seminar və konfranslar vasitəsilə qeyri-formal təhsil və peşəkar bacarıqların artırılmasına fokuslanır (adətən 3–10 günlük qısamüddətli təlimlər olur).</span>
+      </button>
+    </div>
+    <div class="prog-panel" id="panel-esc" role="tabpanel" aria-labelledby="tab-esc" data-prog="esc" data-label="ESC">
+      <div class="prog-head"><h3>ESC paketləri</h3><p>Könüllülük layihələrinə müraciət üçün</p></div>
+      <div class="esc-note" role="note"><span aria-hidden="true">ℹ️</span><p><b>Müraciət üçün Sending Organization tələb olunmur.</b> Qəbul olduqdan sonra tələb olunacaq.</p></div>
+      <div class="pkg-grid">
+      <div class="pkg">
+        <div class="pkg-name">Standard</div>
+        <div class="pkg-count">1 layihə</div>
+        <div class="pkg-price">80 AZN <span>ilkin ödəniş</span></div>
+        <div class="pkg-pay">
+          <div><span>İlkin ödəniş</span><b>80 AZN</b></div>
+          <div><span>Yekun ödəniş</span><b>100 AZN</b></div>
+          <div class="pkg-note">Yekun ödəniş yalnız layihəyə qəbul olduqda ödənilir</div>
+        </div>
+        <div class="calc" data-init="80">
+          <div class="calc-q">Qəbul nəticəsinə görə ödənişiniz</div>
+          <div class="calc-chips" role="group" aria-label="Qəbul nəticəsinə görə ödənişiniz"><button type="button" class="cc" aria-pressed="true" data-add="0" data-note="Yalnız ilkin ödəniş">Qəbul yoxdur</button><button type="button" class="cc" aria-pressed="false" data-add="100" data-note="İlkin + yekun ödəniş">Qəbul olsa</button></div>
+          <div class="calc-out"><span>Cəmi ödəniş</span><b class="calc-total" data-val="80">80 AZN</b></div>
+          <div class="calc-note">Yalnız ilkin ödəniş</div>
+        </div>
+        <ul>
+          <li>1 layihəyə müraciət</li>
+          <li>1 fərdi motivasiya məktubu</li>
+          <li>Europass CV daxildir</li>
+        </ul>
+        <a class="pkg-incl" href="#esc-daxildir">Nələr daxildir? ↓</a>
+        <a class="pkg-cta" data-wa="main" data-stat="esc_1" href="https://wa.me/994706386353?text=Salam%21%20ESC%20Standard%20paketi%20il%C9%99%20maraqlan%C4%B1ram%2C%20%C9%99trafl%C4%B1%20m%C9%99lumat%20almaq%20ist%C9%99yir%C9%99m%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Bu paketi seç</a>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">Premium</div>
+        <div class="pkg-count">2 layihə</div>
+        <div class="pkg-price">100 AZN <span>ilkin ödəniş</span></div>
+        <div class="pkg-pay">
+          <div><span>İlkin ödəniş</span><b>100 AZN</b></div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Yekun ödəniş · 1 layihəyə qəbul</span><b>100 AZN</b></div>
+            <div class="tier-total">Cəmi: 200 AZN</div>
+          </div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Yekun ödəniş · 2 layihəyə qəbul</span><b>130 AZN</b></div>
+            <div class="tier-total">Cəmi: 230 AZN</div>
+          </div>
+        </div>
+        <div class="calc" data-init="100">
+          <div class="calc-q">Qəbul nəticəsinə görə ödənişiniz</div>
+          <div class="calc-chips" role="group" aria-label="Qəbul nəticəsinə görə ödənişiniz"><button type="button" class="cc" aria-pressed="true" data-add="0" data-note="Yalnız ilkin ödəniş">Qəbul yoxdur</button><button type="button" class="cc" aria-pressed="false" data-add="100" data-note="İlkin + 100 AZN yekun">1 qəbul</button><button type="button" class="cc" aria-pressed="false" data-add="130" data-note="İlkin + 130 AZN yekun">2 qəbul</button></div>
+          <div class="calc-out"><span>Cəmi ödəniş</span><b class="calc-total" data-val="100">100 AZN</b></div>
+          <div class="calc-note">Yalnız ilkin ödəniş</div>
+        </div>
+        <ul>
+          <li>2 layihəyə müraciət</li>
+          <li>2 fərdi motivasiya məktubu</li>
+          <li>Europass CV daxildir</li>
+        </ul>
+        <a class="pkg-incl" href="#esc-daxildir">Nələr daxildir? ↓</a>
+        <a class="pkg-cta" data-wa="main" data-stat="esc_2" href="https://wa.me/994706386353?text=Salam%21%20ESC%20Premium%20paketi%20il%C9%99%20maraqlan%C4%B1ram%2C%20%C9%99trafl%C4%B1%20m%C9%99lumat%20almaq%20ist%C9%99yir%C9%99m%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Bu paketi seç</a>
+      </div>
+      <div class="pkg featured">
+        <div class="ribbon">Ən sərfəli</div>
+        <div class="pkg-name">VIP</div>
+        <div class="pkg-count">4 layihə</div>
+        <div class="pkg-price">130 AZN <span>ilkin ödəniş</span></div>
+        <div class="pkg-pay">
+          <div><span>İlkin ödəniş</span><b>130 AZN</b></div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Yekun ödəniş · 1 layihəyə qəbul</span><b>100 AZN</b></div>
+            <div class="tier-total">Cəmi: 230 AZN</div>
+          </div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Yekun ödəniş · 2 layihəyə qəbul</span><b>130 AZN</b></div>
+            <div class="tier-total">Cəmi: 260 AZN</div>
+          </div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Yekun ödəniş · 3 və ya daha çox qəbul</span><b>200 AZN</b></div>
+            <div class="tier-total">Cəmi: 330 AZN</div>
+          </div>
+        </div>
+        <div class="calc" data-init="130">
+          <div class="calc-q">Qəbul nəticəsinə görə ödənişiniz</div>
+          <div class="calc-chips" role="group" aria-label="Qəbul nəticəsinə görə ödənişiniz"><button type="button" class="cc" aria-pressed="true" data-add="0" data-note="Yalnız ilkin ödəniş">Qəbul yoxdur</button><button type="button" class="cc" aria-pressed="false" data-add="100" data-note="İlkin + 100 AZN yekun">1 qəbul</button><button type="button" class="cc" aria-pressed="false" data-add="130" data-note="İlkin + 130 AZN yekun">2 qəbul</button><button type="button" class="cc" aria-pressed="false" data-add="200" data-note="İlkin + 200 AZN yekun">3+ qəbul</button></div>
+          <div class="calc-out"><span>Cəmi ödəniş</span><b class="calc-total" data-val="130">130 AZN</b></div>
+          <div class="calc-note">Yalnız ilkin ödəniş</div>
+        </div>
+        <ul>
+          <li>4 layihəyə müraciət</li>
+          <li>4 fərdi motivasiya məktubu</li>
+          <li>Europass CV daxildir</li>
+        </ul>
+        <a class="pkg-incl" href="#esc-daxildir">Nələr daxildir? ↓</a>
+        <a class="pkg-cta" data-wa="main" data-stat="esc_3" href="https://wa.me/994706386353?text=Salam%21%20ESC%20VIP%20paketi%20il%C9%99%20maraqlan%C4%B1ram%2C%20%C9%99trafl%C4%B1%20m%C9%99lumat%20almaq%20ist%C9%99yir%C9%99m%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Bu paketi seç</a>
+      </div>
+      </div>
+      <div class="esc-incl" id="esc-daxildir">
+        <div class="esc-incl-head"><div class="k">HƏR ESC PAKETİNƏ DAXİLDİR</div><h3>Müraciətdən yola düşənə qədər</h3></div>
+        <div class="esc-flow">
+          <div class="esc-phase before">
+            <div class="ph-top"><h4>Müraciət mərhələsi</h4><span class="ph-tag">Qəbuldan əvvəl</span></div>
+          <ol class="esc-steps">
+          <li class="esc-step"><div><div class="st-t">ESC hesabı yaradılır və profil hazırlanır</div></div></li>
+          <li class="esc-step"><div><div class="st-t">Profilinizə ən uyğun layihələr seçilir</div></div></li>
+          <li class="esc-step"><div><div class="st-t">Europass CV hazırlanır</div><details class="esc-more"><summary>Europass CV nədir?</summary><p>Avropa standartına aid CV-dir. Bununla təkcə ESC layihələrinə yox, universitetlərə, iş vakansiyalarına, təlim və digər forumlara müraciət zamanı da istifadə edə bilərsiniz. Hazırlanan CV sizdə qalacaq.</p></details><div class="esc-act"><span class="esc-hint">Təkcə CV lazımdırsa:</span><a class="esc-btn" data-wa="main" data-stat="esc_cv" href="https://wa.me/994706386353?text=Salam%21%20Yaln%C4%B1z%20Europass%20CV%20haz%C4%B1rlanmas%C4%B1%20xidm%C9%99ti%20%2830%20AZN%29%20il%C9%99%20maraqlan%C4%B1ram%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Yalnız CV · <b>30 AZN</b></a></div></div></li>
+          <li class="esc-step"><div><div class="st-t">Hər layihəyə uyğun motivasiya məktubu yazılır</div><div class="esc-act"><span class="esc-hint">Təkcə motivasiya məktubu lazımdırsa:</span><a class="esc-btn" data-wa="main" data-stat="esc_letter" href="https://wa.me/994706386353?text=Salam%21%20Yaln%C4%B1z%20motivasiya%20m%C9%99ktubu%20haz%C4%B1rlanmas%C4%B1%20xidm%C9%99ti%20%2825%20AZN%29%20il%C9%99%20maraqlan%C4%B1ram%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Yalnız məktub · <b>25 AZN</b></a></div></div></li>
+          <li class="esc-step"><div><div class="st-t">Profiliniz və sənədləriniz yoxlanılır</div></div></li>
+          <li class="esc-step"><div><div class="st-t">Yekun müraciət göndərilir</div></div></li>
+          </ol>
+          </div>
+          <div class="esc-phase after">
+            <div class="ph-top"><h4>Qəbul olduqdan sonra</h4><span class="ph-tag">Qəbuldan sonra</span></div>
+          <ul class="esc-steps">
+          <li class="esc-step"><div><div class="st-t">Sending Organization dəstəyi</div><div class="st-d">Müraciət zamanı tələb olunmur, yalnız qəbuldan sonra lazım olur.</div></div></li>
+          <li class="esc-step"><div><div class="st-t">Viza sənədlərinin hazırlanmasına nəzarət</div></div></li>
+          <li class="esc-step"><div><div class="st-t">Getməmişdən əvvəl ümumi məlumatlandırma</div></div></li>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="prog-panel" id="panel-salto" role="tabpanel" aria-labelledby="tab-salto" data-prog="salto" data-label="SALTO Youth" hidden>
+      <div class="prog-head"><h3>SALTO Youth paketləri</h3><p>Təlim kursları və seminarlar üçün</p></div>
     <div class="pkg-grid">
 
       <div class="pkg">
@@ -244,7 +375,8 @@
       </div>
 
     </div>
-    <p class="note-line">Qəbul qərarı layihə təşkilatçılarına məxsusdur, qəbula zəmanət verilmir. Ətraflı: <button type="button" class="linklike" data-open="termsModal">Şərtlər və geri qaytarma</button>.</p>
+    </div>
+    <p class="note-line">Qəbul qərarı layihə təşkilatçılarına məxsusdur, qəbula zəmanət verilmir. Ətraflı: <button type="button" class="linklike" data-open="termsModal">Şərtlər və geri qaytarma</button>. ESC və SALTO Youth paketlərinə eyni şərtlər tətbiq olunur.</p>
   </div>
 </section>
 
@@ -334,7 +466,7 @@
     <div class="strip-card">
       <div class="k">VACİB QEYD</div>
       <h3>Sending Organization üzvlüyü</h3>
-      <p>Erasmus+ layihələri üçün Göndərən Təşkilat tələb olunur. Üzvlüyü olmayan müraciətçilər üçün əlavə haqq tətbiq edilir.</p>
+      <p>SALTO Youth layihələrinə müraciət üçün Göndərən Təşkilat tələb olunur (ESC-də yalnız qəbuldan sonra). Üzvlüyü olmayan müraciətçilər üçün əlavə haqq tətbiq edilir.</p>
             <div class="strip-actions">
         <a class="btn-member" data-wa="main" href="https://wa.me/994706386353?text=Salam%21%20Sending%20Organization%20%C3%BCzvl%C3%BCy%C3%BC%20il%C9%99%20maraqlan%C4%B1ram%2C%20%C3%BCzv%20olmaq%20ist%C9%99yir%C9%99m%20%F0%9F%99%82" target="_blank" rel="noopener">Üzv ol <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <button type="button" class="more-btn" data-open="sendingOrgModal">Ətraflı məlumat</button>
@@ -371,9 +503,18 @@
       <div class="field"><label for="f-pkg">Maraqlandığınız paket</label>
         <select id="f-pkg" name="package">
           <option>Hələ bilmirəm</option>
-          <option>Standard</option>
-          <option>Premium</option>
-          <option>VIP</option>
+          <optgroup label="ESC">
+            <option>ESC — Standard</option>
+            <option>ESC — Premium</option>
+            <option>ESC — VIP</option>
+            <option>Yalnız Europass CV</option>
+            <option>Yalnız motivasiya məktubu</option>
+          </optgroup>
+          <optgroup label="SALTO Youth">
+            <option>SALTO Youth — Standard</option>
+            <option>SALTO Youth — Premium</option>
+            <option>SALTO Youth — VIP</option>
+          </optgroup>
           <option>Yalnız konsultasiya</option>
         </select></div>
       <label class="consent"><input type="checkbox" name="consent" required><span>Məlumatlarımın <button type="button" class="linklike" data-open="privacyModal">Gizlilik siyasəti</button> əsasında emal olunmasına razıyam.</span></label>
@@ -510,7 +651,14 @@
           <span class="plus"></span>
         </button>
         <div class="faq-a">
-          <p>Paketlər müraciət ediləcək layihə sayına və dəstək həcminə görə fərqlənir:</p>
+          <p>Paketlər proqrama və müraciət ediləcək layihə sayına görə fərqlənir.</p>
+          <p><b>ESC (könüllülük):</b></p>
+          <ul>
+            <li><b>Standard</b> (1 layihə): İlkin 80 AZN / yekun 100 AZN.</li>
+            <li><b>Premium</b> (2 layihə): İlkin 100 AZN / qəbul sayından asılı olaraq yekun 100 AZN və ya 130 AZN.</li>
+            <li><b>VIP</b> (4 layihə): İlkin 130 AZN / qəbul sayından asılı olaraq yekun 100, 130 və ya 200 AZN.</li>
+          </ul>
+          <p><b>SALTO Youth (təlim kursları):</b></p>
           <ul>
             <li><b>Standard</b> (1 layihə): Konkret bir layihəyə diqqət yetirmək istəyənlər üçün (İlkin: 50 AZN / Yekun: 100 AZN).</li>
             <li><b>Premium</b> (2 layihə): 2 fərqli layihəyə müraciət və fərdi strategiya (İlkin: 80 AZN / qəbul sayından asılı olaraq yekun 100 AZN və ya 170 AZN).</li>
@@ -518,6 +666,38 @@
           </ul>
         </div>
       </div>
+
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          Europass CV nədir və ayrıca sifariş etmək olarmı?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <p>Europass CV Avropa standartına aid CV-dir. Bununla təkcə ESC layihələrinə yox, universitetlərə, iş vakansiyalarına, təlim və digər forumlara müraciət zamanı da istifadə edə bilərsiniz; hazırlanan CV sizdə qalır. ESC paketlərinə daxildir. Təkcə CV lazımdırsa, ayrıca xidmət kimi 30 AZN-ə sifariş edə bilərsiniz. Təkcə motivasiya məktubu üçün də ayrıca xidmət var — 25 AZN.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          ESC ilə SALTO Youth arasında fərq nədir?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <p>ESC 18–30 yaş arası gənclər üçün Avropada könüllülük proqramıdır (2 həftədən 12 aya qədər). SALTO Youth isə gənclər sahəsində çalışanlar, təlimçilər və fəal gənclər üçün qısamüddətli (adətən 3–10 gün) beynəlxalq təlim kursları, seminarlar və konfranslardır.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          ESC layihəsinə müraciət üçün Sending Organization lazımdırmı?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <p>Xeyr, ESC layihələrinə müraciət üçün tələb olunmur. Qəbul olduqdan sonra tələb olunacaq və biz Sending Organization dəstəyini göstəririk. SALTO Youth layihələrində isə müraciət zamanı Sending Organization tələb olunur.</p>
+        </div>
+      </div>
+
 
       <div class="faq-item">
         <button type="button" class="faq-q" aria-expanded="false">
@@ -600,18 +780,27 @@
     <p>Ödənişdən əvvəl oxumağınızı xahiş edirik</p>
 
     <h4>Xidmətin əhatəsi</h4>
-    <p>Seçdiyiniz paketə uyğun olaraq: profilə uyğun layihə(lər)in seçilməsi, fərdi Motivation Text, müraciətlərin təqdim olunması, viza sənədlərinə dəstək və müsahibəyə hazırlıq.</p>
+    <p><b>SALTO Youth paketləri:</b> profilə uyğun layihə(lər)in seçilməsi, fərdi Motivation Text, müraciətlərin təqdim olunması, viza sənədlərinə dəstək və müsahibəyə hazırlıq.</p>
+    <p><b>ESC paketləri:</b> ESC hesabının yaradılması və profilin hazırlanması, profilə uyğun layihələrin seçilməsi, Europass CV, hər layihə üçün motivasiya məktubu, profilin və sənədlərin yoxlanması, yekun müraciət; qəbuldan sonra isə Sending Organization dəstəyi, viza sənədlərinin hazırlanmasına nəzarət və getməmişdən əvvəl ümumi məlumatlandırma.</p>
 
     <h4>Ödəniş qaydası</h4>
+    <p><b>SALTO Youth paketləri</b></p>
     <ul>
       <li><b>Standard (150 AZN):</b> ilkin 50 AZN + yekun 100 AZN</li>
       <li><b>Premium (180–250 AZN):</b> ilkin 80 AZN; 1 layihəyə qəbul olarsa yekun 100 AZN (cəmi 180 AZN), 2 layihəyə qəbul olarsa yekun 170 AZN (cəmi 250 AZN)</li>
       <li><b>VIP (250–320 AZN):</b> ilkin 150 AZN; 1 layihəyə qəbul olarsa +100 AZN (cəmi 250 AZN), 2 və ya daha çox layihəyə qəbul olarsa +170 AZN (cəmi 320 AZN)</li>
     </ul>
+    <p><b>ESC paketləri</b></p>
+    <ul>
+      <li><b>Standard (180 AZN):</b> ilkin 80 AZN + yekun 100 AZN</li>
+      <li><b>Premium (200–230 AZN):</b> ilkin 100 AZN; 1 layihəyə qəbul olarsa yekun 100 AZN (cəmi 200 AZN), 2 layihəyə qəbul olarsa yekun 130 AZN (cəmi 230 AZN)</li>
+      <li><b>VIP (230–330 AZN):</b> ilkin 130 AZN; 1 layihəyə qəbul olarsa yekun 100 AZN (cəmi 230 AZN), 2 layihəyə qəbul olarsa yekun 130 AZN (cəmi 260 AZN), 3 və ya daha çox layihəyə qəbul olarsa yekun 200 AZN (cəmi 330 AZN)</li>
+    </ul>
     <p>Yekun ödəniş yalnız ən azı 1 layihəyə qəbul təsdiqləndikdən sonra tələb olunur.</p>
+    <p><b>Ayrıca xidmətlər:</b> yalnız Europass CV hazırlanması — 30 AZN; yalnız motivasiya məktubu hazırlanması — 25 AZN.</p>
 
     <h4>Qəbul olmadıqda</h4>
-    <p>Heç bir layihədən qəbul gəlməzsə, yekun ödəniş tələb olunmur. İlkin ödəniş saxlanılır və geri qaytarılmır.</p>
+    <p>Heç bir layihədən qəbul gəlməzsə (həm ESC, həm SALTO Youth paketlərində), yekun ödəniş tələb olunmur. İlkin ödəniş saxlanılır və geri qaytarılmır.</p>
 
     <h4>Qəbula zəmanət yoxdur</h4>
     <p>Qəbul qərarı layihə təşkilatçılarına məxsusdur, qəbula zəmanət verilmir. Biz müraciətin keyfiyyətinə və profilə uyğunluğa dəstək oluruq.</p>
@@ -620,7 +809,7 @@
     <p>Səyahət, yaşayış və qidalanma xərcləri layihə şərtlərinə uyğun layihə tərəfindən qarşılanır. Səyahət xərcləri üçün limit ola bilər (məsələn, 350€-ya qədər geri ödəniş) və hər layihənin öz qaydaları var. Bu xərclər xidmət haqqımıza daxil deyil.</p>
 
     <h4>Sending Organization üzvlüyü</h4>
-    <p>Üzvlüyü olmayan müraciətçilər üçün 6 aylıq və ya 1 illik üzvlük ayrıca xidmətdir və paket qiymətinə daxil deyil. Qiymət üçün bizə yazın.</p>
+    <p>Üzvlüyü olmayan müraciətçilər üçün 6 aylıq və ya 1 illik üzvlük ayrıca xidmətdir və paket qiymətinə daxil deyil. Qiymət üçün bizə yazın. ESC layihələrində Sending Organization yalnız qəbul olduqdan sonra tələb olunur.</p>
 
     <h4>Ödəniş üsulları</h4>
     <p>Bank kartı, bank köçürməsi və ya M10. Rekvizitlər müraciət zamanı WhatsApp vasitəsilə göndərilir.</p>
@@ -667,6 +856,7 @@
       <a href="#elaqe">Contact</a>
     </nav>
     <div class="nav-right">
+      <button type="button" class="search-btn" data-search-open aria-label="Search the site" title="Search ( / )"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
       <button type="button" class="theme-btn" data-theme-toggle aria-label="Switch to dark mode">☾</button>
       <div class="lang" role="group" aria-label="Language"><button type="button" data-set-lang="az" lang="az">AZ</button><button type="button" data-set-lang="en" lang="en" aria-current="true">EN</button></div>
       <a class="nav-cta member" data-wa="main" href="https://wa.me/994706386353?text=Hello%21%20I%27d%20like%20to%20become%20a%20member%20%28Sending%20Organization%29.%20Could%20you%20tell%20me%20how%3F%20%F0%9F%99%82" target="_blank" rel="noopener">★ Join now</a>
@@ -717,7 +907,7 @@
       <div class="member-body">
         <div class="k">SENDING ORGANIZATION</div>
         <h2 id="memH">Become a member to apply to projects</h2>
-        <p>Erasmus+ projects require a Sending Organization. With a 6-month or 1-year membership you can apply to any number of projects. Write to us for the price and details.</p>
+        <p>SALTO Youth and other Erasmus+ projects require a Sending Organization when you apply; for ESC projects it is not needed to apply, only after acceptance. With a 6-month or 1-year membership you can apply to any number of projects. Write to us for the price and details.</p>
         <ul class="member-points"><li>Valid for 6 months or 1 year</li><li>Any number of projects</li><li>Personal support</li></ul>
       </div>
       <div class="member-actions">
@@ -769,7 +959,7 @@
   </div>
   <div class="wrap">
     <div class="steps">
-      <div class="step"><div class="n">01</div><h3>You choose a package</h3><p>Standard, Premium or VIP — pick based on how many projects you want to apply to.</p></div>
+      <div class="step"><div class="n">01</div><h3>You choose a programme and package</h3><p>ESC or SALTO Youth, then Standard, Premium or VIP — pick based on how many projects you want to apply to.</p></div>
       <div class="step"><div class="n">02</div><h3>We find the projects</h3><p>We research and select Erasmus+ projects that match your profile and interests.</p></div>
       <div class="step"><div class="n">03</div><h3>Your application is prepared</h3><p>A personal Motivation Text is written and we submit your application for you.</p></div>
       <div class="step"><div class="n">04</div><h3>Visa and preparation</h3><p>After an acceptance we help you prepare visa documents and the interview.</p></div>
@@ -782,9 +972,139 @@
     <div class="section-head">
       <div class="k">PACKAGES</div>
       <h2>Choose the level of support that fits your profile</h2>
-      <p>Every package includes a personal Motivation Text, submission of your application and visa support.</p>
+      <p>First choose the programme, then the package that suits you. Every package includes a personal motivation letter and submission of your application.</p>
     </div>
     <div class="urgency-note" id="slotsNote">⚠️ <span id="slotsText">Note: to write quality motivation letters and give every applicant individual time, <b>our monthly application capacity is limited</b>.</span></div>
+    <div class="prog-pick" role="tablist" aria-label="Choose a programme">
+      <button type="button" role="tab" class="prog-tab" id="tab-esc" data-prog="esc" aria-selected="true" aria-controls="panel-esc">
+        <span class="pt-top"><span class="pt-name">ESC</span><span class="pt-tag">Volunteering</span></span>
+        <span class="pt-sub">European Solidarity Corps</span>
+        <span class="pt-text">A volunteering programme for young people aged 18–30 in social, environmental and cultural projects across Europe. It can be short-term (2 weeks – 2 months) or long-term (2 – 12 months); travel, accommodation, insurance and pocket money are fully covered. The total duration of the project you take part in cannot exceed 1 year.</span>
+      </button>
+      <button type="button" role="tab" class="prog-tab" id="tab-salto" data-prog="salto" aria-selected="false" aria-controls="panel-salto">
+        <span class="pt-top"><span class="pt-name">SALTO Youth</span><span class="pt-tag">Training courses</span></span>
+        <span class="pt-sub">Resource network for youth</span>
+        <span class="pt-text">A resource network for youth workers, trainers and active young people. Through international training courses, seminars and conferences it focuses on non-formal education and building professional skills (usually short trainings of 3–10 days).</span>
+      </button>
+    </div>
+    <div class="prog-panel" id="panel-esc" role="tabpanel" aria-labelledby="tab-esc" data-prog="esc" data-label="ESC">
+      <div class="prog-head"><h3>ESC packages</h3><p>For volunteering projects</p></div>
+      <div class="esc-note" role="note"><span aria-hidden="true">ℹ️</span><p><b>A Sending Organization is not required to apply.</b> It will be required after you are accepted.</p></div>
+      <div class="pkg-grid">
+      <div class="pkg">
+        <div class="pkg-name">Standard</div>
+        <div class="pkg-count">1 project</div>
+        <div class="pkg-price">80 AZN <span>initial payment</span></div>
+        <div class="pkg-pay">
+          <div><span>Initial payment</span><b>80 AZN</b></div>
+          <div><span>Final payment</span><b>100 AZN</b></div>
+          <div class="pkg-note">The final payment is due only if you are accepted to the project</div>
+        </div>
+        <div class="calc" data-init="80">
+          <div class="calc-q">Your cost by outcome</div>
+          <div class="calc-chips" role="group" aria-label="Your cost by outcome"><button type="button" class="cc" aria-pressed="true" data-add="0" data-note="Initial payment only">No acceptance</button><button type="button" class="cc" aria-pressed="false" data-add="100" data-note="Initial + final payment">Accepted</button></div>
+          <div class="calc-out"><span>Total you pay</span><b class="calc-total" data-val="80">80 AZN</b></div>
+          <div class="calc-note">Initial payment only</div>
+        </div>
+        <ul>
+          <li>Application to 1 project</li>
+          <li>1 personal motivation letter</li>
+          <li>Europass CV included</li>
+        </ul>
+        <a class="pkg-incl" href="#esc-daxildir">What is included? ↓</a>
+        <a class="pkg-cta" data-wa="main" data-stat="esc_1" href="https://wa.me/994706386353?text=Hello%21%20I%27m%20interested%20in%20the%20ESC%20Standard%20package%20and%20would%20like%20more%20details%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Choose this package</a>
+      </div>
+      <div class="pkg">
+        <div class="pkg-name">Premium</div>
+        <div class="pkg-count">2 projects</div>
+        <div class="pkg-price">100 AZN <span>initial payment</span></div>
+        <div class="pkg-pay">
+          <div><span>Initial payment</span><b>100 AZN</b></div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Final payment · accepted to 1 project</span><b>100 AZN</b></div>
+            <div class="tier-total">Total: 200 AZN</div>
+          </div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Final payment · accepted to 2 projects</span><b>130 AZN</b></div>
+            <div class="tier-total">Total: 230 AZN</div>
+          </div>
+        </div>
+        <div class="calc" data-init="100">
+          <div class="calc-q">Your cost by outcome</div>
+          <div class="calc-chips" role="group" aria-label="Your cost by outcome"><button type="button" class="cc" aria-pressed="true" data-add="0" data-note="Initial payment only">No acceptance</button><button type="button" class="cc" aria-pressed="false" data-add="100" data-note="Initial + 100 AZN final">1 acceptance</button><button type="button" class="cc" aria-pressed="false" data-add="130" data-note="Initial + 130 AZN final">2 acceptances</button></div>
+          <div class="calc-out"><span>Total you pay</span><b class="calc-total" data-val="100">100 AZN</b></div>
+          <div class="calc-note">Initial payment only</div>
+        </div>
+        <ul>
+          <li>Applications to 2 projects</li>
+          <li>2 personal motivation letters</li>
+          <li>Europass CV included</li>
+        </ul>
+        <a class="pkg-incl" href="#esc-daxildir">What is included? ↓</a>
+        <a class="pkg-cta" data-wa="main" data-stat="esc_2" href="https://wa.me/994706386353?text=Hello%21%20I%27m%20interested%20in%20the%20ESC%20Premium%20package%20and%20would%20like%20more%20details%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Choose this package</a>
+      </div>
+      <div class="pkg featured">
+        <div class="ribbon">Best value</div>
+        <div class="pkg-name">VIP</div>
+        <div class="pkg-count">4 projects</div>
+        <div class="pkg-price">130 AZN <span>initial payment</span></div>
+        <div class="pkg-pay">
+          <div><span>Initial payment</span><b>130 AZN</b></div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Final payment · accepted to 1 project</span><b>100 AZN</b></div>
+            <div class="tier-total">Total: 230 AZN</div>
+          </div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Final payment · accepted to 2 projects</span><b>130 AZN</b></div>
+            <div class="tier-total">Total: 260 AZN</div>
+          </div>
+          <div class="tier-row">
+            <div class="tier-line"><span>Final payment · accepted to 3 or more</span><b>200 AZN</b></div>
+            <div class="tier-total">Total: 330 AZN</div>
+          </div>
+        </div>
+        <div class="calc" data-init="130">
+          <div class="calc-q">Your cost by outcome</div>
+          <div class="calc-chips" role="group" aria-label="Your cost by outcome"><button type="button" class="cc" aria-pressed="true" data-add="0" data-note="Initial payment only">No acceptance</button><button type="button" class="cc" aria-pressed="false" data-add="100" data-note="Initial + 100 AZN final">1 acceptance</button><button type="button" class="cc" aria-pressed="false" data-add="130" data-note="Initial + 130 AZN final">2 acceptances</button><button type="button" class="cc" aria-pressed="false" data-add="200" data-note="Initial + 200 AZN final">3+ acceptances</button></div>
+          <div class="calc-out"><span>Total you pay</span><b class="calc-total" data-val="130">130 AZN</b></div>
+          <div class="calc-note">Initial payment only</div>
+        </div>
+        <ul>
+          <li>Applications to 4 projects</li>
+          <li>4 personal motivation letters</li>
+          <li>Europass CV included</li>
+        </ul>
+        <a class="pkg-incl" href="#esc-daxildir">What is included? ↓</a>
+        <a class="pkg-cta" data-wa="main" data-stat="esc_3" href="https://wa.me/994706386353?text=Hello%21%20I%27m%20interested%20in%20the%20ESC%20VIP%20package%20and%20would%20like%20more%20details%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Choose this package</a>
+      </div>
+      </div>
+      <div class="esc-incl" id="esc-daxildir">
+        <div class="esc-incl-head"><div class="k">INCLUDED IN EVERY ESC PACKAGE</div><h3>From application to departure</h3></div>
+        <div class="esc-flow">
+          <div class="esc-phase before">
+            <div class="ph-top"><h4>Application stage</h4><span class="ph-tag">Before acceptance</span></div>
+          <ol class="esc-steps">
+          <li class="esc-step"><div><div class="st-t">Your ESC account is created and your profile is prepared</div></div></li>
+          <li class="esc-step"><div><div class="st-t">The projects that best fit your profile are selected</div></div></li>
+          <li class="esc-step"><div><div class="st-t">Your Europass CV is prepared</div><details class="esc-more"><summary>What is a Europass CV?</summary><p>It is a CV in the European standard. You can use it not only for ESC projects but also when applying to universities, job vacancies, training courses and other forums. The CV we prepare stays with you.</p></details><div class="esc-act"><span class="esc-hint">Need only the CV?</span><a class="esc-btn" data-wa="main" data-stat="esc_cv" href="https://wa.me/994706386353?text=Hello%21%20I%27m%20interested%20in%20the%20Europass%20CV%20only%20service%20%2830%20AZN%29%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> CV only · <b>30 AZN</b></a></div></div></li>
+          <li class="esc-step"><div><div class="st-t">A motivation letter tailored to each project is written</div><div class="esc-act"><span class="esc-hint">Need only a motivation letter?</span><a class="esc-btn" data-wa="main" data-stat="esc_letter" href="https://wa.me/994706386353?text=Hello%21%20I%27m%20interested%20in%20the%20motivation%20letter%20only%20service%20%2825%20AZN%29%20%F0%9F%99%82" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.97-.93-.26-.1-.46-.15-.65.15-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.6-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.15-.65-1.57-.9-2.15-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.56-.01-.19 0-.51.07-.78.36-.26.29-1.02 1-1.02 2.43s1.05 2.82 1.19 3.01c.15.19 2.06 3.15 5 4.42.7.3 1.24.48 1.67.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.37.24-.68.24-1.26.17-1.37-.07-.12-.26-.19-.55-.34z"/><path d="M12.02 2C6.5 2 2 6.48 2 12c0 1.85.5 3.65 1.44 5.23L2 22l4.9-1.28A9.96 9.96 0 0 0 12.02 22C17.55 22 22 17.52 22 12S17.55 2 12.02 2zm0 18.18c-1.63 0-3.23-.44-4.62-1.27l-.33-.2-3.16.83.84-3.08-.22-.32A8.17 8.17 0 0 1 3.82 12c0-4.53 3.68-8.2 8.2-8.2s8.19 3.67 8.19 8.2-3.67 8.18-8.19 8.18z"/></svg> Letter only · <b>25 AZN</b></a></div></div></li>
+          <li class="esc-step"><div><div class="st-t">Your profile and documents are checked</div></div></li>
+          <li class="esc-step"><div><div class="st-t">The final application is submitted</div></div></li>
+          </ol>
+          </div>
+          <div class="esc-phase after">
+            <div class="ph-top"><h4>After acceptance</h4><span class="ph-tag">After acceptance</span></div>
+          <ul class="esc-steps">
+          <li class="esc-step"><div><div class="st-t">Sending Organization support</div><div class="st-d">Not required when you apply — only after acceptance.</div></div></li>
+          <li class="esc-step"><div><div class="st-t">Supervision of visa document preparation</div></div></li>
+          <li class="esc-step"><div><div class="st-t">General briefing before you travel</div></div></li>
+          </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="prog-panel" id="panel-salto" role="tabpanel" aria-labelledby="tab-salto" data-prog="salto" data-label="SALTO Youth" hidden>
+      <div class="prog-head"><h3>SALTO Youth packages</h3><p>For training courses and seminars</p></div>
     <div class="pkg-grid">
 
       <div class="pkg">
@@ -875,7 +1195,8 @@
       </div>
 
     </div>
-    <p class="note-line">The acceptance decision belongs to the project organisers; acceptance is not guaranteed. Details: <button type="button" class="linklike" data-open="termsModal">Terms and refunds</button>.</p>
+    </div>
+    <p class="note-line">The acceptance decision belongs to the project organisers; acceptance is not guaranteed. Details: <button type="button" class="linklike" data-open="termsModal">Terms and refunds</button>. The same terms apply to ESC and SALTO Youth packages.</p>
   </div>
 </section>
 
@@ -965,7 +1286,7 @@
     <div class="strip-card">
       <div class="k">IMPORTANT</div>
       <h3>Sending Organization membership</h3>
-      <p>Erasmus+ projects require a Sending Organization. An additional fee applies to applicants who are not yet members.</p>
+      <p>SALTO Youth projects require a Sending Organization to apply (for ESC, only after acceptance). An additional fee applies to applicants who are not yet members.</p>
             <div class="strip-actions">
         <a class="btn-member" data-wa="main" href="https://wa.me/994706386353?text=Hello%21%20I%27d%20like%20to%20become%20a%20member%20%28Sending%20Organization%29.%20Could%20you%20tell%20me%20how%3F%20%F0%9F%99%82" target="_blank" rel="noopener">Become a member <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <button type="button" class="more-btn" data-open="sendingOrgModal">Learn more</button>
@@ -1002,9 +1323,18 @@
       <div class="field"><label for="f-pkg">Package you are interested in</label>
         <select id="f-pkg" name="package">
           <option>I don't know yet</option>
-          <option>Standard</option>
-          <option>Premium</option>
-          <option>VIP</option>
+          <optgroup label="ESC">
+            <option>ESC — Standard</option>
+            <option>ESC — Premium</option>
+            <option>ESC — VIP</option>
+            <option>Europass CV only</option>
+            <option>Motivation letter only</option>
+          </optgroup>
+          <optgroup label="SALTO Youth">
+            <option>SALTO Youth — Standard</option>
+            <option>SALTO Youth — Premium</option>
+            <option>SALTO Youth — VIP</option>
+          </optgroup>
           <option>Consultation only</option>
         </select></div>
       <label class="consent"><input type="checkbox" name="consent" required><span>I agree to my data being processed in line with the <button type="button" class="linklike" data-open="privacyModal">Privacy policy</button>.</span></label>
@@ -1141,7 +1471,14 @@
           <span class="plus"></span>
         </button>
         <div class="faq-a">
-          <p>The packages differ by the number of projects you apply to and the amount of support:</p>
+          <p>The packages differ by programme and by the number of projects you apply to.</p>
+          <p><b>ESC (volunteering):</b></p>
+          <ul>
+            <li><b>Standard</b> (1 project): Initial 80 AZN / final 100 AZN.</li>
+            <li><b>Premium</b> (2 projects): Initial 100 AZN / depending on the number of acceptances, final 100 AZN or 130 AZN.</li>
+            <li><b>VIP</b> (4 projects): Initial 130 AZN / depending on the number of acceptances, final 100, 130 or 200 AZN.</li>
+          </ul>
+          <p><b>SALTO Youth (training courses):</b></p>
           <ul>
             <li><b>Standard</b> (1 project): for those who want to focus on one specific project (Initial: 50 AZN / Final: 100 AZN).</li>
             <li><b>Premium</b> (2 projects): applications to 2 different projects and a personal strategy (Initial: 80 AZN / depending on the number of acceptances, final 100 AZN or 170 AZN).</li>
@@ -1149,6 +1486,38 @@
           </ul>
         </div>
       </div>
+
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          What is a Europass CV and can I order it separately?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <p>A Europass CV is a CV in the European standard. You can use it not only for ESC projects but also when applying to universities, job vacancies, training courses and other forums; the CV we prepare stays with you. It is included in the ESC packages. If you only need the CV, you can order it as a separate service for 30 AZN. A motivation letter on its own is also available separately — 25 AZN.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          What is the difference between ESC and SALTO Youth?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <p>ESC is a volunteering programme in Europe for young people aged 18–30 (from 2 weeks to 12 months). SALTO Youth offers short international training courses, seminars and conferences (usually 3–10 days) for youth workers, trainers and active young people.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" aria-expanded="false">
+          Do I need a Sending Organization to apply to an ESC project?
+          <span class="plus"></span>
+        </button>
+        <div class="faq-a">
+          <p>No, it is not required to apply to ESC projects. It will be required after you are accepted, and we provide Sending Organization support. For SALTO Youth projects, a Sending Organization is required when you apply.</p>
+        </div>
+      </div>
+
 
       <div class="faq-item">
         <button type="button" class="faq-q" aria-expanded="false">
@@ -1231,18 +1600,27 @@
     <p>Please read this before you pay</p>
 
     <h4>What the service covers</h4>
-    <p>Depending on the package you choose: selection of projects that fit your profile, a personal Motivation Text, submission of your applications, visa document support and interview preparation.</p>
+    <p><b>SALTO Youth packages:</b> selection of projects that fit your profile, a personal Motivation Text, submission of your applications, visa document support and interview preparation.</p>
+    <p><b>ESC packages:</b> creating your ESC account and preparing your profile, selecting projects that fit your profile, a Europass CV, a motivation letter for each project, checking your profile and documents, the final application; after acceptance — Sending Organization support, supervision of visa document preparation and a general briefing before you travel.</p>
 
     <h4>Payment scheme</h4>
+    <p><b>SALTO Youth packages</b></p>
     <ul>
       <li><b>Standard (150 AZN):</b> initial 50 AZN + final 100 AZN</li>
       <li><b>Premium (180–250 AZN):</b> initial 80 AZN; final 100 AZN if accepted to 1 project (total 180 AZN), 170 AZN if accepted to 2 projects (total 250 AZN)</li>
       <li><b>VIP (250–320 AZN):</b> initial 150 AZN; +100 AZN if accepted to 1 project (total 250 AZN), +170 AZN if accepted to 2 or more projects (total 320 AZN)</li>
     </ul>
+    <p><b>ESC packages</b></p>
+    <ul>
+      <li><b>Standard (180 AZN):</b> initial 80 AZN + final 100 AZN</li>
+      <li><b>Premium (200–230 AZN):</b> initial 100 AZN; final 100 AZN if accepted to 1 project (total 200 AZN), 130 AZN if accepted to 2 projects (total 230 AZN)</li>
+      <li><b>VIP (230–330 AZN):</b> initial 130 AZN; final 100 AZN if accepted to 1 project (total 230 AZN), 130 AZN if accepted to 2 projects (total 260 AZN), 200 AZN if accepted to 3 or more projects (total 330 AZN)</li>
+    </ul>
     <p>The final payment is required only after acceptance to at least 1 project has been confirmed.</p>
+    <p><b>Separate services:</b> Europass CV only — 30 AZN; motivation letter only — 25 AZN.</p>
 
     <h4>If you are not accepted</h4>
-    <p>If none of the projects accepts you, no final payment is required. The initial payment is retained and is non-refundable.</p>
+    <p>If none of the projects accepts you (in both ESC and SALTO Youth packages), no final payment is required. The initial payment is retained and is non-refundable.</p>
 
     <h4>No guarantee of acceptance</h4>
     <p>The acceptance decision belongs to the project organisers; acceptance is not guaranteed. We support the quality of the application and how well it fits your profile.</p>
@@ -1251,7 +1629,7 @@
     <p>Travel, accommodation and food are covered by the project according to its terms. Travel may have a limit (for example, reimbursement up to €350) and every project has its own rules. These costs are not part of our service fee.</p>
 
     <h4>Sending Organization membership</h4>
-    <p>For applicants without a membership, a 6-month or 1-year membership is a separate service and is not included in the package price. Write to us for the price.</p>
+    <p>For applicants without a membership, a 6-month or 1-year membership is a separate service and is not included in the package price. Write to us for the price. For ESC projects, a Sending Organization is required only after acceptance.</p>
 
     <h4>Payment methods</h4>
     <p>Bank card, bank transfer or M10. Payment details are sent via WhatsApp when you apply.</p>
@@ -1288,6 +1666,8 @@
 <script src="js/main.js"></script>
 <script src="js/europe-map.js"></script>
 <script src="js/extras.js"></script>
+<script src="js/packages.js"></script>
+<script src="js/search.js"></script>
 <script src="js/stats.js"></script>
 <script src="js/effects.js"></script>
 

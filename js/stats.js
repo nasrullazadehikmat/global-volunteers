@@ -61,8 +61,11 @@
     }
     if (t.closest(".nav-cta.member, .btn-member, .member-link")) bump("stats/cta/member");
     else if (t.closest("[data-open=sendingOrgModal]")) bump("stats/cta/member_info");
+    else if ((n = t.closest(".pkg-cta, .esc-btn")) && n.getAttribute("data-stat")) {
+      bump("stats/cta/" + n.getAttribute("data-stat"));      /* ESC paketləri və ayrıca xidmətlər: esc_1, esc_2, esc_3, esc_cv, esc_letter */
+    }
     else if ((n = t.closest(".pkg-cta"))) {
-      var all = Array.prototype.slice.call(document.querySelectorAll(".pkg-cta")); var i = all.indexOf(n) + 1;
+      var all = Array.prototype.slice.call(document.querySelectorAll(".pkg-cta:not([data-stat])")); var i = all.indexOf(n) + 1;
       bump("stats/cta/pkg_" + (i > 0 && i <= 3 ? i : 1));
     }
     else if (t.closest(".consult-cta")) bump("stats/cta/consult");

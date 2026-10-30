@@ -4,8 +4,9 @@
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"]/g, function(c){ return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]; }); }
   function sum(o){ var n = 0; Object.keys(o || {}).forEach(function(k){ n += +o[k] || 0; }); return n; }
   function dayKey(d){ return d.toISOString().slice(0, 10); }
-  var CTA = {member: "Üzv ol", member_info: "Üzvlük: «Ətraflı məlumat»", support: "Dəstək al (layihələrdə)", pkg_1: "Paket: Standard", pkg_2: "Paket: Premium",
-    pkg_3: "Paket: VIP", consult: "Konsultasiya", whatsapp: "WhatsApp (ümumi)"};
+  var CTA = {member: "Üzv ol", member_info: "Üzvlük: «Ətraflı məlumat»", support: "Dəstək al (layihələrdə)", pkg_1: "Salto Youth paketi: Standard", pkg_2: "Salto Youth paketi: Premium",
+    pkg_3: "Salto Youth paketi: VIP", esc_1: "ESC paketi: Standard", esc_2: "ESC paketi: Premium", esc_3: "ESC paketi: VIP", esc_cv: "ESC: yalnız Europass CV",
+    esc_letter: "ESC: yalnız motivasiya məktubu", consult: "Konsultasiya", whatsapp: "WhatsApp (ümumi)"};
 
   function render(box, stats, rows){
     stats = stats || {};

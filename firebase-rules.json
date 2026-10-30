@@ -20,7 +20,7 @@
       },
       "cta": {
         "$name": {
-          ".write": "($name === 'member' || $name === 'member_info' || $name === 'support' || $name === 'pkg_1' || $name === 'pkg_2' || $name === 'pkg_3' || $name === 'consult' || $name === 'whatsapp') && newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
+          ".write": "($name === 'member' || $name === 'member_info' || $name === 'support' || $name === 'pkg_1' || $name === 'pkg_2' || $name === 'pkg_3' || $name === 'esc_1' || $name === 'esc_2' || $name === 'esc_3' || $name === 'esc_cv' || $name === 'esc_letter' || $name === 'consult' || $name === 'whatsapp') && newData.isNumber() && newData.val() === (data.exists() ? data.val() : 0) + 1"
         }
       }
     }
