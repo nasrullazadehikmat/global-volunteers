@@ -799,6 +799,8 @@
   .esc-svc .esc-btn{background:var(--teal);color:var(--on-teal);}
   .esc-svc .esc-btn:hover,.esc-svc .esc-btn:focus-visible{filter:brightness(1.08);background:var(--teal);color:var(--on-teal);}
 
+  .esc-btn.mini{padding:3px 10px;font-size:.72rem;margin-left:6px;vertical-align:middle;white-space:nowrap;}
+
   /* ===== SAYT AXTARIŞI ===== */
   .search-btn{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:var(--gold);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:background .2s,transform .2s;padding:0;flex:none;}
   .search-btn:hover{background:rgba(255,255,255,.2);transform:scale(1.08);}
