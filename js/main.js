@@ -604,9 +604,11 @@
           '<div class="adm-actions" style="margin-top:12px;"><button type="button" class="adm-btn" id="admBulkCheck">Yoxla</button>' +
           '<button type="button" class="btn-primary" id="admBulkGo" disabled style="border:none;cursor:pointer;font-family:Inter,sans-serif;">Hamısını əlavə et</button></div>' +
           '<p class="adm-msg" id="admBulkMsg" role="status"></p></details>' +
+          '<details class="adm-card" id="admPdf"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Üzv PDF-i (xoş gəldin)</summary><div id="admPdfBox" style="margin-top:14px;"></div></details>' +
           '<details class="adm-card" id="admStatsBox"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Statistika</summary><div style="margin-top:14px;"><button type="button" class="adm-btn" id="admStatsReload">Yenilə</button></div><div id="admStats" style="margin-top:14px;">Açanda yüklənəcək…</div></details>' +
           '<section class="adm-card"><h2>Əlavə olunmuş layihələr (<span id="admCount">0</span>)</h2><div id="admList"></div></section>';
         $("#admWho").textContent = user.email || "";
+        $("#admPdf").addEventListener("toggle", function(){ if (this.open && window.GV_initMemberPdf) window.GV_initMemberPdf($("#admPdfBox")); });
         $("#admOut").addEventListener("click", function(){ authM.signOut(auth); });
 
         var editing = null, rows = [];
