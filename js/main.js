@@ -212,7 +212,7 @@
             id: id, title: str(f.title), program: str(f.program), country: str(f.country),
             deadline: str(f.deadline), start: str(f.startDate), end: str(f.endDate),
             link: str(f.link), costs: str(f.costs), about: str(f.about),
-            sendingOrg: f.sendingOrg !== false, appFee: f.appFee === true, appFeeAmount: str(f.appFeeAmount)
+            sendingOrg: str(f.program) === "ESC" ? false : f.sendingOrg !== false, appFee: f.appFee === true, appFeeAmount: str(f.appFeeAmount)
           });
         });
       }
@@ -595,7 +595,7 @@
           '<button type="button" class="adm-toggle" id="a-so" aria-pressed="true">Sending Organization tələb olunur</button>' +
           '<button type="button" class="adm-toggle" id="a-fee" aria-pressed="false">Application fee var</button>' +
           '<input id="a-feeamt" type="text" maxlength="40" placeholder="Məbləğ (məs. 20 €)" aria-label="Application fee məbləği"></div></div></div>' +
-          '<p class="adm-note">ℹ️ «Sending Organization» düyməsi aktiv olanda kartda «Layihələrə müraciət etmək üçün Sending Organization tələb olunur.» yazılır, aktiv deyilsə yazılmır. ESC və SALTO Youth seçəndə o həmişə aktivdir, Application fee isə olmur. «Digər» seçəndə hər ikisini özünüz seçirsiniz.</p>' +
+          '<p class="adm-note">ℹ️ «Sending Organization» düyməsi aktiv olanda kartda «Layihələrə müraciət etmək üçün Sending Organization tələb olunur.» yazılır, aktiv deyilsə yazılmır. SALTO Youth seçəndə o həmişə aktivdir, ESC seçəndə isə həmişə söndürülür (ESC müraciətində tələb olunmur). Application fee ikisində də olmur. «Digər» seçəndə hər ikisini özünüz seçirsiniz.</p>' +
           '<div class="adm-actions"><button type="submit" class="btn-primary" id="admSave" style="border:none;cursor:pointer;font-family:Inter,sans-serif;">Əlavə et</button>' +
           '<button type="button" class="adm-btn" id="admCancel" hidden>Ləğv et</button></div><p class="adm-msg" id="admMsg" role="status"></p></form>' +
           '<details class="adm-card" id="admBulk"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Toplu əlavə et (JSON)</summary>' +
@@ -622,7 +622,7 @@
         }
         function syncProg(){
           var other = f("program").value === "OTHER", so = $("#a-so"), fee = $("#a-fee"), amt = $("#a-feeamt");
-          if (!other) { tog("a-so", true); tog("a-fee", false); }
+          if (!other) { tog("a-so", f("program").value !== "ESC"); tog("a-fee", false); }
           so.disabled = !other; fee.disabled = !other;
           var feeOn = other && tog("a-fee");
           amt.hidden = !feeOn; amt.disabled = !feeOn;
@@ -702,7 +702,7 @@
             deadline: f("deadline").value, startDate: f("start").value, endDate: f("end").value,
             link: f("link").value.trim(), costs: f("costs").value, about: f("about").value.trim()
           };
-          data.sendingOrg = data.program === "OTHER" ? tog("a-so") : true;
+          data.sendingOrg = data.program === "OTHER" ? tog("a-so") : data.program === "SALTO";
           data.appFee = data.program === "OTHER" ? tog("a-fee") : false;
           data.appFeeAmount = data.appFee ? f("feeamt").value.trim() : "";
           if (!data.title || !data.program || !data.country || !data.deadline || !data.startDate || !data.endDate || !data.link || !data.costs) { msg("Ulduzlu sahələrin hamısını doldurun.", true); return; }
@@ -754,7 +754,7 @@
               deadline: String(x.deadline || "").trim(), startDate: String(x.startDate || "").trim(), endDate: String(x.endDate || "").trim(),
               link: String(x.link || "").trim(), costs: String(x.costs || "").trim().toLowerCase(), about: String(x.about || "").trim()
             };
-            o.sendingOrg = p === "OTHER" && x.sendingOrg !== undefined ? yes(x.sendingOrg) : true;
+            o.sendingOrg = p === "OTHER" ? (x.sendingOrg !== undefined ? yes(x.sendingOrg) : true) : p === "SALTO";
             o.appFee = p === "OTHER" && yes(x.appFee);
             o.appFeeAmount = o.appFee ? String(x.appFeeAmount || "").trim() : "";
             if (!o.title) er.push("title yoxdur");
