@@ -844,3 +844,14 @@
   .crm-badge.info{background:rgba(40,110,200,0.14);color:#1f56a0;}
   .crm-import{margin-top:20px;border-top:1px solid var(--line);padding-top:16px;}
   .crm-import summary{cursor:pointer;font-weight:600;}
+  .crm-range{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px;}
+  .crm-range label{display:flex;flex-direction:column;gap:4px;font-size:0.8rem;font-weight:600;color:var(--ink);}
+  .crm-range input,.crm-range select{font:inherit;font-size:0.9rem;padding:8px 10px;border:1px solid var(--line);border-radius:3px;background:var(--white);color:var(--ink);}
+  .crm-range .adm-btn.on{background:var(--teal);border-color:var(--teal);color:#fff;}
+  .crm-chart{margin:16px 0 4px;border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--white);}
+  .st-card b.up{color:#1a8f5a;} .st-card b.down{color:#B3402E;}
+  .st-card b{overflow-wrap:anywhere;}
+  .crm-proj{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;align-items:end;margin-bottom:8px;}
+  .crm-proj input,.crm-proj select{width:100%;font:inherit;font-size:0.9rem;padding:9px 10px;border:1px solid var(--line);border-radius:3px;background:var(--white);color:var(--ink);}
+  .crm-proj label{font-size:0.75rem;font-weight:600;display:flex;flex-direction:column;gap:3px;}
+  @media(max-width:700px){.crm-proj{grid-template-columns:1fr 1fr;}.crm-proj .p-link{grid-column:1/-1;}}
