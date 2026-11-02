@@ -203,11 +203,25 @@
   }
 
   /* ---------- Sheets-dən import (kopyalanmış cədvəl) ---------- */
+  /* Sheets-dən kopyalanan mətn: dırnaq içindəki xanalarda sətir sonu ola bilər, ona görə simvol-simvol oxunur */
   function parseTsv(text){
-    var lines = String(text || "").replace(/\r/g, "").split("\n").filter(function(l){ return l.trim() !== ""; });
-    if (lines.length < 2) return {head: [], rows: []};
-    return {head: lines[0].split("\t").map(function(h){ return h.trim().toLowerCase(); }),
-            rows: lines.slice(1).map(function(l){ return l.split("\t").map(function(c){ return c.trim(); }); })};
+    text = String(text || "").replace(/\r\n?/g, "\n");
+    var rows = [], row = [], cur = "", inQ = false, i, ch;
+    for (i = 0; i < text.length; i++) {
+      ch = text.charAt(i);
+      if (inQ) {
+        if (ch === '"') { if (text.charAt(i + 1) === '"') { cur += '"'; i++; } else inQ = false; }
+        else cur += ch;
+      } else if (ch === '"' && cur === "") inQ = true;
+      else if (ch === "\t") { row.push(cur); cur = ""; }
+      else if (ch === "\n") { row.push(cur); rows.push(row); row = []; cur = ""; }
+      else cur += ch;
+    }
+    row.push(cur); rows.push(row);
+    rows = rows.map(function(r){ return r.map(function(c){ return c.replace(/\s+/g, " ").trim(); }); })
+      .filter(function(r){ return r.some(function(c){ return c !== ""; }); });
+    if (rows.length < 2) return {head: [], rows: []};
+    return {head: rows[0].map(function(h){ return h.toLowerCase(); }), rows: rows.slice(1)};
   }
   function colIdx(head, keys){
     for (var i = 0; i < head.length; i++) for (var k = 0; k < keys.length; k++) if (head[i].indexOf(keys[k]) >= 0) return i;
