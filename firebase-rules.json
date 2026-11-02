@@ -4,6 +4,10 @@
       ".read": true,
       ".write": "auth != null && auth.token.email === 'ADMIN_EMAIL' && auth.token.email_verified === true"
     },
+    "crm": {
+      ".read": "auth != null && auth.token.email === 'ADMIN_EMAIL' && auth.token.email_verified === true",
+      ".write": "auth != null && auth.token.email === 'ADMIN_EMAIL' && auth.token.email_verified === true"
+    },
     "stats": {
       ".read": "auth != null && auth.token.email === 'ADMIN_EMAIL' && auth.token.email_verified === true",
       "visits": {

@@ -829,3 +829,18 @@
   .search-hit{animation:srHit 2.4s ease;}
   @keyframes srHit{0%,65%{box-shadow:0 0 0 4px rgba(255,197,49,.95);}100%{box-shadow:0 0 0 0 rgba(255,197,49,0);}}
   @media(prefers-reduced-motion:reduce){.search-hit{animation:none;outline:3px solid var(--gold);outline-offset:3px;}.prog-tab,.esc-btn{transition:none;}}
+
+  /* admin CRM */
+  .crm-tabs{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
+  .crm-bar{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;}
+  .crm-bar input{flex:1;min-width:200px;font:inherit;font-size:0.95rem;padding:10px 14px;border:1px solid var(--line);border-radius:3px;background:var(--white);color:var(--ink);}
+  .crm-form{border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:12px;}
+  .crm-act{white-space:nowrap;}
+  .crm-act .adm-btn{padding:5px 10px;font-size:0.8rem;}
+  .crm-badge{display:inline-block;font-size:0.75rem;font-weight:600;padding:2px 9px;border-radius:999px;background:rgba(0,0,0,0.07);color:var(--ink);}
+  .crm-badge.ok{background:rgba(30,140,90,0.15);color:#1a6b45;}
+  .crm-badge.warn{background:rgba(215,154,59,0.2);color:#8a5a0f;}
+  .crm-badge.bad{background:rgba(179,64,46,0.15);color:#B3402E;}
+  .crm-badge.info{background:rgba(40,110,200,0.14);color:#1f56a0;}
+  .crm-import{margin-top:20px;border-top:1px solid var(--line);padding-top:16px;}
+  .crm-import summary{cursor:pointer;font-weight:600;}
