@@ -130,7 +130,7 @@
       if (est) estimated++;
       ev.push({date: date, amount: amount, kind: kind, est: !!est});
     }
-    members.forEach(function(m){ add(m.startDate, +m.amount || 0, "member", false); });
+    members.forEach(function(m){ add(m.paidDate || m.startDate, +m.amount || 0, "member", false); });
     orders.forEach(function(o){
       add(o.initialDate, o.initialAmount, "initial", o.initialEstimated);
       if (o.finalPaid > 0) add(o.finalDate || today(), o.finalPaid, "final", false);
@@ -310,7 +310,9 @@
       '<button type="button" class="adm-toggle" id="crmTabI" aria-pressed="true">Gəlir</button>' +
       '<button type="button" class="adm-toggle" id="crmTabS" aria-pressed="false">Xidmətlər (fərdi dəstək)</button>' +
       '<button type="button" class="adm-toggle" id="crmTabM" aria-pressed="false">Üzvlər (Sending Organization)</button>' +
-      '<button type="button" class="adm-btn" id="crmReload">Yenilə</button></div>' +
+      '<button type="button" class="adm-btn" id="crmReload">Yenilə</button>' +
+      '<button type="button" class="adm-btn" id="crmCsv" hidden>CSV yüklə</button>' +
+      '<button type="button" class="adm-btn" id="crmBackup">Ehtiyat nüsxə (JSON)</button></div>' +
       '<p class="adm-msg" id="crmMsg" role="status"></p>' +
       '<div id="crmIncome">' +
         '<div class="crm-range">' +
@@ -421,6 +423,7 @@
         var act = 0, soon = 0, total = 0, expired = 0;
         data.members.forEach(function(m){
           total += +m.amount || 0;
+          if (m.renewedTo) return;
           var d = daysTo(m.endDate);
           if (d === null || d >= 0) act++; else expired++;
           if (d !== null && d >= 0 && d <= 30) soon++;
@@ -456,7 +459,7 @@
       list.forEach(function(m){
         h += '<tr><td>' + esc(m.name) + '</td><td><a href="https://wa.me/' + esc(String(m.phone || "").replace(/\D/g, "")) + '" target="_blank" rel="noopener">' + esc(m.phone) + '</a></td>';
         if (tab === "members") {
-          var d = daysTo(m.endDate), b = d === null ? "" : d < 0 ? badge("Bitib", "bad") : d <= 30 ? badge(d + " gün qalıb", "warn") : "";
+          var d = daysTo(m.endDate), b = m.renewedTo ? badge("Yenilənib", "ok") : d === null ? "" : d < 0 ? badge("Bitib", "bad") : d <= 30 ? badge(d + " gün qalıb", "warn") : "";
           h += '<td>' + esc((MPLANS[m.plan] || MPLANS.free).label) + '</td><td>' + fmtDate(m.startDate) + '</td><td>' + fmtDate(m.endDate) + ' ' + b + '</td><td>' + esc(m.note || "") + '</td>';
         } else {
           var c = calc(m), cnt = {};
@@ -468,6 +471,7 @@
           h += '<td>' + esc(packLabel(m)) + '</td><td>' + pj + '</td><td>' + money(m.initialAmount) + '<small>' + (m.initialDate ? fmtDate(m.initialDate) + (m.initialEstimated ? " (təxmini)" : "") : "tarixsiz") + '</small></td><td>' + fin + '</td><td>' + esc(ORG[m.org] || "") + '</td>';
         }
         var payBtn = tab === "support" && calc(m).pending > 0 ? '<button type="button" class="adm-btn" data-p="' + esc(m.id) + '">Yekun alındı</button> ' : "";
+        if (tab === "members" && !m.renewedTo) payBtn = '<button type="button" class="adm-btn" data-r="' + esc(m.id) + '" title="Üzvlüyü uzat (yeni müddət əlavə edir)">Uzat</button> ';
         h += '<td class="crm-act">' + payBtn + '<button type="button" class="adm-btn" data-e="' + esc(m.id) + '">Redaktə</button> <button type="button" class="adm-btn danger" data-d="' + esc(m.id) + '">Sil</button></td></tr>';
       });
       out.innerHTML = h + '</tbody></table></div>';
@@ -488,9 +492,10 @@
         '<button type="button" class="adm-btn danger p-del" aria-label="Layihəni çıxar">×</button></div>';
     }
 
-    function openForm(rec){
-      rec = rec || {}; editing = rec.id || null;
-      var f = $("#crmForm"), h = '<div class="adm-grid">' +
+    var renewFrom = null;
+    function openForm(rec, renewOf){
+      rec = rec || {}; editing = rec.id || null; renewFrom = renewOf || null;
+      var f = $("#crmForm"), h = (renewOf ? '<div class="adm-note" style="margin-top:0;">Üzvlüyü uzatma: <b>' + esc(renewOf.name) + '</b>. Köhnə qeyd silinmir, «Yenilənib» kimi işarələnir və əvvəlki ödəniş gəlir tarixçəsində qalır.</div>' : '') + '<div class="adm-grid">' +
         '<div class="field"><label>Ad, soyad *</label><input id="c-name" type="text" required maxlength="120" value="' + esc(rec.name || "") + '"></div>' +
         '<div class="field"><label>Telefon *</label><input id="c-phone" type="text" required maxlength="30" placeholder="050 123 45 67" value="' + esc(rec.phone || "") + '"></div>';
       if (tab === "members") {
@@ -498,6 +503,7 @@
           '<div class="field"><label>Məbləğ (AZN)</label><input id="c-amount" type="number" min="0" step="1" value="' + esc(rec.amount != null ? rec.amount : 50) + '"></div>' +
           '<div class="field"><label>Başlama tarixi *</label><input id="c-start" type="date" required value="' + esc(rec.startDate || today()) + '"></div>' +
           '<div class="field"><label>Bitmə tarixi (boş qalsa avtomatik)</label><input id="c-end" type="date" value="' + esc(rec.endDate || "") + '"></div>' +
+          '<div class="field"><label>Ödəniş tarixi (qrafikdə bu tarixdə görünür)</label><input id="c-paid" type="date" value="' + esc(rec.paidDate || (rec.id ? rec.startDate : today()) || today()) + '"></div>' +
           '<div class="field full"><label>Qeyd</label><input id="c-note" type="text" maxlength="200" value="' + esc(rec.note || "") + '"></div>';
       } else {
         var prog = rec.program || "SALTO", pack = rec.pack || "standard", P = PACKS[prog] && PACKS[prog][pack];
@@ -556,7 +562,7 @@
       });
       dueText();
     }
-    function closeForm(){ var f = $("#crmForm"); f.hidden = true; f.innerHTML = ""; editing = null; }
+    function closeForm(){ var f = $("#crmForm"); f.hidden = true; f.innerHTML = ""; editing = null; renewFrom = null; }
     function v(id){ var e = $("#" + id); return e ? e.value.trim() : ""; }
 
     $("#crmForm").addEventListener("submit", function(e){
@@ -569,7 +575,8 @@
         if (!start) { msg("Başlama tarixini seçin.", true); return; }
         var end = v("c-end") || addMonths(start, MPLANS[plan].months);
         if (end < start) { msg("Bitmə tarixi başlama tarixindən əvvəl ola bilməz.", true); return; }
-        rec = {name: v("c-name"), phone: phone, plan: plan, amount: +v("c-amount") || 0, startDate: start, endDate: end, note: v("c-note")};
+        rec = {name: v("c-name"), phone: phone, plan: plan, amount: +v("c-amount") || 0, startDate: start, endDate: end, paidDate: v("c-paid") || start, note: v("c-note")};
+        if (renewFrom) rec.renewedFrom = renewFrom.id;
       } else {
         var projects = readProjects(f), bad = projects.filter(function(p){ return p.link && !/^https?:\/\//i.test(p.link); });
         if (bad.length) { msg("Layihə linki http:// və ya https:// ilə başlamalıdır.", true); return; }
@@ -584,12 +591,14 @@
       if (editing) job = fs.update(fs.ref(db, path + "/" + editing), rec);
       else { rec.createdAt = fs.serverTimestamp(); job = fs.push(fs.ref(db, path), rec); }
       msg("Saxlanılır…");
-      job.then(function(){ var was = editing; closeForm(); msg(was ? "Dəyişikliklər saxlanıldı." : "Əlavə olundu."); return load(); }).catch(denied);
+      var old = renewFrom;
+      if (old) job = job.then(function(ref){ return fs.update(fs.ref(db, "crm/members/" + old.id), {renewedTo: ref.key, updatedAt: fs.serverTimestamp()}); });
+      job.then(function(){ var was = editing; closeForm(); msg(old ? "Üzvlük yeniləndi." : was ? "Dəyişikliklər saxlanıldı." : "Əlavə olundu."); return load(); }).catch(denied);
     });
 
     $("#crmList").addEventListener("click", function(e){
       var b = e.target.closest ? e.target.closest("button") : null; if (!b) return;
-      var list = data[tab], id = b.getAttribute("data-e") || b.getAttribute("data-d") || b.getAttribute("data-p"), rec = null;
+      var list = data[tab], id = b.getAttribute("data-e") || b.getAttribute("data-d") || b.getAttribute("data-p") || b.getAttribute("data-r"), rec = null;
       list.forEach(function(m){ if (m.id === id) rec = m; });
       if (!rec) return;
       if (b.hasAttribute("data-p")) {
@@ -597,6 +606,12 @@
         fs.update(fs.ref(db, "crm/support/" + id), {finalPaid: c.due, finalDate: today(), updatedAt: fs.serverTimestamp()})
           .then(function(){ msg("Yekun ödəniş qeyd olundu: " + rec.name + " (" + money(c.due) + ")."); return load(); }).catch(denied);
         return;
+      }
+      if (b.hasAttribute("data-r")) {
+        var d0 = daysTo(rec.endDate), start = d0 !== null && d0 > 0 ? rec.endDate : today();
+        var plan = rec.plan === "m30" ? "m30" : "y50";
+        openForm({name: rec.name, phone: rec.phone, plan: plan, amount: MPLANS[plan].amount, startDate: start, note: ""}, rec);
+        window.scrollTo({top: box.getBoundingClientRect().top + window.scrollY - 20, behavior: "smooth"}); return;
       }
       if (b.hasAttribute("data-e")) { openForm(rec); window.scrollTo({top: box.getBoundingClientRect().top + window.scrollY - 20, behavior: "smooth"}); return; }
       if (!window.confirm("Silinsin?\n\n" + rec.name)) return;
@@ -606,7 +621,7 @@
     function setTab(t){
       tab = t; closeForm(); msg(""); imsg(""); pendingImport = []; $("#crmGo").disabled = true; $("#crmPaste").value = "";
       tog($("#crmTabI"), t === "income"); tog($("#crmTabS"), t === "support"); tog($("#crmTabM"), t === "members");
-      $("#crmIncome").hidden = t !== "income"; $("#crmListPane").hidden = t === "income";
+      $("#crmIncome").hidden = t !== "income"; $("#crmListPane").hidden = t === "income"; $("#crmCsv").hidden = t === "income";
       $("#crmImpHelp").textContent = t === "members"
         ? "Google Sheets-də «Sending Organization» cədvəlini başlıq sətri ilə kopyalayıb (Ctrl+C) bura yapışdırın → «Yoxla» → «Əlavə et». Telefonlar +994 formatına salınır, təkrar sətirlər keçilir."
         : "«Fərdi Dəstək» cədvəlini başlıq sətri ilə kopyalayıb bura yapışdırın → «Yoxla» → «Əlavə et». Eyni telefonlu sətirlər bir sifarişdə birləşir, proqram link-dən, paket ilkin ödənişdən təyin olunur. Parol sütunu saxlanılmır. «Ödəniş tarixi» sütunu varsa istifadə olunur, yoxdursa deadline ilə təxmin edilir.";
@@ -616,6 +631,52 @@
     $("#crmTabS").addEventListener("click", function(){ setTab("support"); });
     $("#crmTabM").addEventListener("click", function(){ setTab("members"); });
     $("#crmReload").addEventListener("click", load);
+
+    /* ----- export ----- */
+    function csvCell(v, guard){
+      v = String(v == null ? "" : v);
+      if (guard && /^[=+\-@]/.test(v)) v = "'" + v;
+      return /[",\n\r;]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+    }
+    function csvDate(iso){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); return m ? m[3] + "." + m[2] + "." + m[1] : ""; }
+    function download(name, text, type){
+      var blob = new Blob(["\ufeff" + text], {type: type + ";charset=utf-8"}), a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 500);
+    }
+    function membersCsv(){
+      var rows = [["Ad, Soyad", "Əlaqə nömrəsi", "Paket", "Məbləğ (AZN)", "Ödəniş tarixi", "Başlama tarixi", "Bitmə tarixi", "Yenilənib", "Qeydlər"]];
+      data.members.forEach(function(m){
+        rows.push([m.name, m.phone, (MPLANS[m.plan] || MPLANS.free).label, m.amount, csvDate(m.paidDate || m.startDate), csvDate(m.startDate), csvDate(m.endDate), m.renewedTo ? "bəli" : "", m.note || ""]);
+      });
+      return rows;
+    }
+    function ordersCsv(){
+      var rows = [["Ad Soyad", "Əlaqə nömrəsi", "Mail", "Üzvlük", "Proqram", "Paket", "İlkin ödəniş (AZN)", "İlkin ödəniş tarixi", "Tarix təxminidir", "Yekun ödəniş məbləği (AZN)", "Yekun alınıb (AZN)", "Yekun ödəniş tarixi", "Layihə", "Status", "Deadline", "Selection", "Qeyd"]];
+      data.support.forEach(function(o){
+        var c = calc(o), ps = o.projects.length ? o.projects : [{link: "", status: "", deadline: "", selection: ""}];
+        ps.forEach(function(p){
+          rows.push([o.name, o.phone, o.email, ORG[o.org] || "", PROGRAMS[o.program] || o.program, (PACKS[o.program] && PACKS[o.program][o.pack] ? PACKS[o.program][o.pack].label : "Digər"),
+            o.initialAmount, csvDate(o.initialDate), o.initialEstimated ? "bəli" : "", c.due, c.paid, csvDate(o.finalDate), p.link, STATUS[p.status] || "", csvDate(p.deadline), csvDate(p.selection), o.note]);
+        });
+      });
+      return rows;
+    }
+    function toCsv(rows){ return rows.map(function(r, i){ return r.map(function(c, j){ return csvCell(c, i > 0 && j !== 1); }).join(","); }).join("\r\n"); }
+    $("#crmCsv").addEventListener("click", function(){
+      if (!loaded) { msg("Məlumat hələ yüklənməyib.", true); return; }
+      var members = tab === "members";
+      download(members ? "uzvler-" + today() + ".csv" : "xidmetler-" + today() + ".csv", toCsv(members ? membersCsv() : ordersCsv()), "text/csv");
+      msg("CSV faylı yükləndi. Parol sütunu CRM-də saxlanmadığı üçün faylda yoxdur.");
+    });
+    $("#crmBackup").addEventListener("click", function(){
+      msg("Ehtiyat nüsxə hazırlanır…");
+      Promise.all([fs.get(fs.ref(db, "crm/members")), fs.get(fs.ref(db, "crm/support"))]).then(function(r){
+        var out = {exportedAt: new Date().toISOString(), members: r[0].exists() ? r[0].val() : {}, support: r[1].exists() ? r[1].val() : {}};
+        download("crm-backup-" + today() + ".json", JSON.stringify(out, null, 2), "application/json");
+        msg("Ehtiyat nüsxə yükləndi (" + Object.keys(out.members).length + " üzv, " + Object.keys(out.support).length + " sifariş). Faylı təhlükəsiz yerdə saxlayın, içində telefon və mail var.");
+      }).catch(denied);
+    });
     $("#crmAdd").addEventListener("click", function(){ openForm(null); });
     $("#crmSearch").addEventListener("input", function(){ q = this.value; draw(); });
 
