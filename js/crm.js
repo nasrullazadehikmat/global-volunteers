@@ -24,9 +24,15 @@
       standard: {label: "Standard", initial: 80, projects: 1, tiers: [[1, 100]]},
       premium: {label: "Premium", initial: 100, projects: 2, tiers: [[1, 100], [2, 130]]},
       vip: {label: "VIP", initial: 130, projects: 4, tiers: [[1, 100], [2, 130], [3, 200]]}
+    },
+    /* standalone services (site prices): the whole fee is paid up front, no projects and no final payment */
+    OTHER: {
+      letter: {label: "Motivation letter", initial: 25, projects: 0, tiers: []},
+      cv: {label: "Europass CV", initial: 30, projects: 0, tiers: []},
+      consult: {label: "Consultation", initial: 20, projects: 0, tiers: []}
     }
   };
-  var PROGRAMS = {SALTO: "SALTO Youth", ESC: "ESC"};
+  var PROGRAMS = {SALTO: "SALTO Youth", ESC: "ESC", OTHER: "Standalone service"};
   var MPLANS = {
     y50: {name: "Yearly", amount: 50, months: 12},
     y45: {name: "Yearly, old price", amount: 45, months: 12},
@@ -537,8 +543,13 @@
         return {link: r.querySelector(".p-link").value.trim(), status: r.querySelector(".p-status").value, deadline: r.querySelector(".p-dl").value, selection: r.querySelector(".p-sel").value};
       }).filter(function(p){ return p.link || p.deadline || p.status !== "applied"; });
     }
+    function syncProgram(){
+      var prog = F.querySelector("#c-prog"), wrap = F.querySelector("#c-projwrap"); if (!prog || !wrap) return;
+      wrap.style.display = prog.value === "OTHER" ? "none" : "";
+    }
     function dueText(){
       var d = F.querySelector("#c-due"); if (!d) return;
+      if (F.querySelector("#c-prog").value === "OTHER") { d.textContent = "Standalone service: the whole fee is the initial payment. There are no projects and no final payment."; return; }
       var o = {program: F.querySelector("#c-prog").value, pack: F.querySelector("#c-pack").value, projects: readProjects(), finalOverride: readAzn("c-fover"), finalPaid: readAzn("c-fpaid") || 0};
       var c = calc(o);
       d.textContent = "Accepted projects: " + c.accepted + ". Final payment: " + (c.due ? both(c.due) : "none") +
@@ -569,7 +580,7 @@
           '<div class="field"><label for="c-pack">Package *</label><select id="c-pack">' + packOpts(prog, pack) + '</select></div>' +
           usdField("c-initial", "Initial payment", rec.initialAmount != null ? rec.initialAmount : (P ? P.initial : 0)) +
           '<div class="field"><label for="c-idate">Initial payment date' + (rec.initialEstimated ? " (was estimated)" : "") + '</label><input id="c-idate" type="date" value="' + esc(rec.id && !rec.initialEstimated ? rec.initialDate : (rec.initialDate || today())) + '"></div>' +
-          '<div class="field full"><label>Projects</label><div id="c-projs">' + (rec.projects && rec.projects.length ? rec.projects : [{}]).map(projRow).join("") + '</div>' +
+          '<div class="field full" id="c-projwrap"><label>Projects</label><div id="c-projs">' + (rec.projects && rec.projects.length ? rec.projects : [{}]).map(projRow).join("") + '</div>' +
           '<div><button type="button" class="adm-btn" id="c-addproj">Add project</button></div></div>' +
           '<div class="field full"><div class="adm-note" id="c-due" style="margin:0;"></div></div>' +
           usdField("c-fover", "Final amount override", rec.finalOverride !== null && rec.finalOverride !== undefined ? rec.finalOverride : null, "empty = automatic from the site prices") +
@@ -580,7 +591,7 @@
       h += '</div><div class="adm-actions"><button type="submit" class="btn-primary" style="border:none;cursor:pointer;font-family:Inter,sans-serif;">' + (editing ? "Save changes" : renewOf ? "Extend membership" : "Add") + '</button>' +
         '<button type="button" class="adm-btn" id="crmCancel">Cancel</button></div>';
       F.innerHTML = h; F.hidden = false;
-      if (tab === "support") dueText();
+      if (tab === "support") { syncProgram(); dueText(); }
       F.querySelector("#c-name").focus({preventScroll: true});
     }
     function closeForm(){ F.hidden = true; F.innerHTML = ""; editing = null; renewFrom = null; }
@@ -591,7 +602,7 @@
     F.addEventListener("change", function(e){
       var t = e.target;
       if (t.id === "c-plan") setUsd("c-amount", MPLANS[t.value].amount);
-      else if (t.id === "c-prog") { F.querySelector("#c-pack").innerHTML = packOpts(t.value, "standard"); applyPack(); }
+      else if (t.id === "c-prog") { F.querySelector("#c-pack").innerHTML = packOpts(t.value, "standard"); syncProgram(); applyPack(); }
       else if (t.id === "c-pack") applyPack();
       updateHints(); dueText();
     });
