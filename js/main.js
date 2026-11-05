@@ -618,13 +618,12 @@
         $("#admPdf").addEventListener("toggle", function(){ if (this.open && window.GV_initMemberPdf) window.GV_initMemberPdf($("#admPdfBox")); });
         $("#admOut").addEventListener("click", function(){ authM.signOut(auth); });
 
-        var crmReady = false;
-        $("#admCrm").addEventListener("toggle", function(){
-          if (!this.open || crmReady) return;
-          if (!window.GV_initCrm) { $("#admCrmBox").textContent = "js/crm.js yüklənməyib."; return; }
-          crmReady = true;
-          window.GV_initCrm($("#admCrmBox"), {fs: fs, db: db, denied: function(err){ denied(err); }});
-        });
+        var crmTitle = "CRM (members and individual support)", crmOpened = false;
+        if (!window.GV_initCrm) $("#admCrmBox").textContent = "js/crm.js yüklənməyib.";
+        else window.GV_initCrm($("#admCrmBox"), {fs: fs, db: db, denied: function(err){ denied(err); }, onDue: function(n){
+          $("#admCrm > summary").textContent = crmTitle + (n ? " · " + n + (n === 1 ? " reminder" : " reminders") : "");
+          if (n && !crmOpened) { crmOpened = true; $("#admCrm").open = true; }
+        }});
 
         var editing = null, rows = [];
         var ids = ["title", "program", "country", "deadline", "costs", "start", "end", "link", "about"];

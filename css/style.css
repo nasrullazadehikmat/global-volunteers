@@ -856,3 +856,8 @@
   .crm-proj label{font-size:0.75rem;font-weight:600;display:flex;flex-direction:column;gap:3px;}
   @media(max-width:700px){.crm-proj{grid-template-columns:1fr 1fr;}.crm-proj .p-link{grid-column:1/-1;}}
   .crm-hint{font-size:0.8rem;font-weight:500;color:var(--ink-soft);min-height:1.1em;}
+  .crm-count{display:inline-block;min-width:18px;margin-left:6px;padding:1px 6px;border-radius:999px;background:#B3402E;color:#fff;font-size:0.72rem;font-weight:700;line-height:1.4;text-align:center;}
+  .crm-rem h3{font-size:1rem;margin:20px 0 8px;}
+  .crm-rem-row{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line);}
+  .crm-rem-row small{display:block;color:var(--ink-soft);margin-top:3px;overflow-wrap:anywhere;}
+  .crm-rem-row .adm-btn{padding:6px 12px;font-size:0.82rem;}

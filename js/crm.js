@@ -56,6 +56,11 @@
   function daysTo(iso){ return isoOk(iso) ? Math.round((ms(iso) - ms(today())) / 864e5) : null; }
   function fmtDate(iso){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); return m ? m[3] + "." + m[2] + "." + m[1].slice(2) : "—"; }
   function toArr(v){ return Array.isArray(v) ? v.filter(Boolean) : (v && typeof v === "object" ? Object.keys(v).map(function(k){ return v[k]; }) : []); }
+  /* [key, value] pairs: Firebase may return an array or an object keyed by index */
+  function entries(v){
+    if (Array.isArray(v)) { var r = []; v.forEach(function(x, i){ if (x) r.push([String(i), x]); }); return r; }
+    return v && typeof v === "object" ? Object.keys(v).map(function(k){ return [k, v[k]]; }) : [];
+  }
   function plain(v){ return String(v || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
 
   /* money: stored in AZN, shown in USD */
@@ -123,8 +128,8 @@
     return "custom";
   }
   function normOrder(o){
-    var projects = toArr(o.projects).map(function(p){ return {link: p.link || "", status: p.status || "applied", deadline: p.deadline || "", selection: p.selection || ""}; });
-    if (!projects.length && (o.link || o.status)) projects = [{link: o.link || "", status: o.status || "applied", deadline: o.deadline || "", selection: o.selection || ""}];
+    var projects = entries(o.projects).map(function(e){ var p = e[1]; return {_k: e[0], link: p.link || "", status: p.status || "applied", deadline: p.deadline || "", selection: p.selection || "", notified: !!p.notified}; });
+    if (!projects.length && (o.link || o.status)) projects = [{_k: "0", link: o.link || "", status: o.status || "applied", deadline: o.deadline || "", selection: o.selection || "", notified: false}];
     var initial = o.initialAmount != null ? +o.initialAmount : (+o.amount || 0);
     var program = o.program || guessProgram(projects.length ? projects[0].link : "");
     return {
@@ -221,6 +226,61 @@
         esc(points[i].label + ": " + fmtUsd(vals[i]) + (i ? " (" + (diff >= 0 ? "+" : "-") + fmtUsd(Math.abs(diff)) + ")" : "")) + '</title></circle>';
     }
     return s + '</svg>';
+  }
+
+  /* ---------- reminders ---------- */
+  function dayDiff(a, b){ return Math.round((ms(b) - ms(a)) / 864e5); }
+  /* due:  selection tomorrow or today (message the candidate to check their email), membership ending today or ended in the last 7 days
+     soon: the same things within the next 7 days
+     late: the selection date has passed but the project is still "Applied" (the status needs updating) */
+  function reminders(members, orders, t){
+    t = t || today();
+    var due = [], soon = [], late = [];
+    orders.forEach(function(o){
+      o.projects.forEach(function(p){
+        if (p.status !== "applied" || !isoOk(p.selection)) return;
+        var d = dayDiff(t, p.selection);
+        var it = {type: "selection", id: o.id, key: p._k, name: o.name, phone: o.phone, link: p.link, date: p.selection, days: d};
+        if (d < 0) late.push(it);
+        else if (p.notified) return;
+        else if (d <= 1) due.push(it);
+        else if (d <= 7) soon.push(it);
+      });
+    });
+    members.forEach(function(m){
+      if (m.renewedTo || m.endNotified || !isoOk(m.endDate)) return;
+      var d = dayDiff(t, m.endDate), it = {type: "membership", id: m.id, name: m.name, phone: m.phone, date: m.endDate, days: d};
+      if (d <= 0 && d >= -7) due.push(it); else if (d >= 1 && d <= 7) soon.push(it);
+    });
+    function byDate(a, b){ return a.date.localeCompare(b.date); }
+    due.sort(byDate); soon.sort(byDate); late.sort(byDate);
+    return {due: due, soon: soon, late: late};
+  }
+  function icsEsc(t){ return String(t).replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
+  function icsFold(line){ var out = [], i = 0; while (line.length - i > 60) { out.push(line.substr(i, 60)); i += 60; } out.push(line.substr(i)); return out.join("\r\n "); }
+  /* calendar events at 09:00 Baku time (05:00 UTC): the day before each pending selection date, and the day each membership ends */
+  function icsText(members, orders, t){
+    t = t || today();
+    var stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+Z$/, "Z"), seq = Math.floor(Date.now() / 60000), ev = [];
+    function add(uid, date, summary, desc){
+      if (date < t) return;
+      var d = date.replace(/-/g, "");
+      ev.push(["BEGIN:VEVENT", "UID:" + uid + "@globalvolunteers", "DTSTAMP:" + stamp, "SEQUENCE:" + seq, "DTSTART:" + d + "T050000Z", "DTEND:" + d + "T053000Z",
+        "SUMMARY:" + icsEsc(summary), "DESCRIPTION:" + icsEsc(desc), "BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsEsc(summary), "TRIGGER:-PT0M", "END:VALARM", "END:VEVENT"]);
+    }
+    orders.forEach(function(o){ o.projects.forEach(function(p){
+      if (p.status !== "applied" || p.notified || !isoOk(p.selection)) return;
+      add("sel-" + o.id + "-" + p._k, addDays(p.selection, -1), "Write to " + o.name + ": check email for the project response",
+        "Selection date: " + fmtDate(p.selection) + "\nPhone: " + o.phone + (p.link ? "\nProject: " + p.link : "") + "\nTell them to check their email (and the spam folder) for the project response.");
+    }); });
+    members.forEach(function(m){
+      if (m.renewedTo || m.endNotified || !isoOk(m.endDate)) return;
+      add("mem-" + m.id, m.endDate, "Membership ends: " + m.name, "Sending Organization membership ends " + fmtDate(m.endDate) + "\nPhone: " + m.phone + "\nFollow up or extend the membership.");
+    });
+    var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Global Volunteers//CRM//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH", "X-WR-CALNAME:Global Volunteers CRM"];
+    ev.forEach(function(e){ lines = lines.concat(e); });
+    lines.push("END:VCALENDAR");
+    return {text: lines.map(icsFold).join("\r\n") + "\r\n", count: ev.length};
   }
 
   /* ---------- import from Sheets (copied cells) ---------- */
@@ -323,12 +383,13 @@
   /* ---------- interface ---------- */
   function init(box, ctx){
     var fs = ctx.fs, db = ctx.db, denied = ctx.denied;
-    var tab = "income", data = {members: [], support: []}, q = "", editing = null, loaded = false, pendingImport = [], renewFrom = null;
+    var tab = "income", data = {members: [], support: []}, q = "", editing = null, loaded = false, pendingImport = [], renewFrom = null, userTab = false, firstLoad = true;
     var inc = {from: "", to: "", gran: "auto", cum: false, kinds: ["member", "initial", "final"], preset: "all"};
 
     box.innerHTML =
       '<div class="crm-tabs">' +
       '<button type="button" class="adm-toggle" id="crmTabI" aria-pressed="true">Income</button>' +
+      '<button type="button" class="adm-toggle" id="crmTabR" aria-pressed="false">Reminders<span class="crm-count" id="crmRemCount" hidden></span></button>' +
       '<button type="button" class="adm-toggle" id="crmTabS" aria-pressed="false">Services (individual support)</button>' +
       '<button type="button" class="adm-toggle" id="crmTabM" aria-pressed="false">Members (Sending Organization)</button>' +
       '<button type="button" class="adm-btn" id="crmReload">Reload</button>' +
@@ -346,6 +407,7 @@
         '<div id="crmIncCards" class="st-cards"></div>' +
         '<div id="crmChart" class="crm-chart"></div>' +
         '<p class="adm-note" id="crmIncNote" style="margin-top:12px;"></p></div>' +
+      '<div id="crmRem" class="crm-rem" hidden></div>' +
       '<div id="crmListPane" hidden>' +
         '<div class="st-cards" id="crmStats"></div>' +
         '<div class="crm-bar"><input id="crmSearch" type="search" placeholder="Search by name, phone or project" aria-label="Search"><button type="button" class="adm-btn" id="crmAdd">Add new</button></div>' +
@@ -373,6 +435,7 @@
         s[1].forEach(function(d){ data.support.push(normOrder(Object.assign({id: d.key}, d.val()))); });
         loaded = true;
         if (!inc.from) setPreset(inc.preset, true);
+        if (firstLoad) { firstLoad = false; if (!userTab && reminders(data.members, data.support).due.length) setTab("reminders"); }
         draw();
       }).catch(function(err){
         if (err && /permission/i.test(String(err.code || "") + String(err.message || ""))) msg("Can't read the CRM data. Add the \"crm\" rule to Firebase Rules (see firebase-rules.json).", true);
@@ -463,6 +526,10 @@
 
     function draw(){
       drawIncome();
+      var rem = reminders(data.members, data.support), cnt = $("#crmRemCount");
+      cnt.hidden = !rem.due.length; cnt.textContent = rem.due.length;
+      if (ctx.onDue) ctx.onDue(rem.due.length);
+      if (tab === "reminders") { drawReminders(rem); return; }
       if (tab === "income") return;
       drawStats();
       var list = tab === "members" ? data.members.slice() : data.support.slice(), ql = q.trim().toLowerCase();
@@ -532,7 +599,7 @@
     }
     function projRow(p){
       p = p || {};
-      return '<div class="crm-proj"><input type="url" class="p-link" placeholder="Project link" maxlength="500" value="' + esc(p.link || "") + '">' +
+      return '<div class="crm-proj" data-n="' + (p.notified ? "1" : "") + '" data-sel="' + esc(p.selection || "") + '"><input type="url" class="p-link" placeholder="Project link" maxlength="500" value="' + esc(p.link || "") + '">' +
         '<select class="p-status">' + opts(STATUS, p.status || "applied") + '</select>' +
         '<label>Deadline <input type="date" class="p-dl" value="' + esc(p.deadline || "") + '"></label>' +
         '<label>Selection <input type="date" class="p-sel" value="' + esc(p.selection || "") + '"></label>' +
@@ -540,8 +607,10 @@
     }
     function readProjects(){
       return Array.prototype.map.call(F.querySelectorAll(".crm-proj"), function(r){
-        return {link: r.querySelector(".p-link").value.trim(), status: r.querySelector(".p-status").value, deadline: r.querySelector(".p-dl").value, selection: r.querySelector(".p-sel").value};
-      }).filter(function(p){ return p.link || p.deadline || p.status !== "applied"; });
+        var sel = r.querySelector(".p-sel").value, p = {link: r.querySelector(".p-link").value.trim(), status: r.querySelector(".p-status").value, deadline: r.querySelector(".p-dl").value, selection: sel};
+        if (r.getAttribute("data-n") === "1" && sel === r.getAttribute("data-sel")) p.notified = true;
+        return p;
+      }).filter(function(p){ return p.link || p.deadline || p.selection || p.status !== "applied"; });
     }
     function syncProgram(){
       var prog = F.querySelector("#c-prog"), wrap = F.querySelector("#c-projwrap"); if (!prog || !wrap) return;
@@ -629,6 +698,7 @@
         if (end < start) { msg("The end date can't be before the start date.", true); return; }
         rec = {name: v("c-name"), phone: phone, plan: plan, amount: readAzn("c-amount") || 0, startDate: start, endDate: end, paidDate: v("c-paid") || start, note: v("c-note")};
         if (renewFrom) rec.renewedFrom = renewFrom.id;
+        if (editing) { var oldM = data.members.filter(function(m){ return m.id === editing; })[0]; if (oldM && oldM.endDate !== end) rec.endNotified = false; }
       } else {
         var projects = readProjects(), bad = projects.filter(function(p){ return p.link && !/^https?:\/\//i.test(p.link); });
         if (bad.length) { msg("A project link must start with http:// or https://", true); return; }
@@ -648,6 +718,13 @@
       job.then(function(){ var was = editing; closeForm(); msg(old ? "Membership extended." : was ? "Changes saved." : "Added."); return load(); }).catch(denied);
     });
 
+    function startRenew(rec){
+      var d0 = daysTo(rec.endDate), start = d0 !== null && d0 > 0 ? rec.endDate : today();
+      var plan = rec.plan === "m30" ? "m30" : "y50";
+      openForm({name: rec.name, phone: rec.phone, plan: plan, amount: MPLANS[plan].amount, startDate: start, note: ""}, rec);
+      window.scrollTo({top: box.getBoundingClientRect().top + window.scrollY - 20, behavior: "smooth"});
+    }
+
     $("#crmList").addEventListener("click", function(e){
       var b = e.target.closest ? e.target.closest("button") : null; if (!b) return;
       var list = data[tab], id = b.getAttribute("data-e") || b.getAttribute("data-d") || b.getAttribute("data-p") || b.getAttribute("data-r"), rec = null;
@@ -659,12 +736,7 @@
           .then(function(){ msg("Final payment recorded: " + rec.name + " (" + money(c.due) + ")."); return load(); }).catch(denied);
         return;
       }
-      if (b.hasAttribute("data-r")) {
-        var d0 = daysTo(rec.endDate), start = d0 !== null && d0 > 0 ? rec.endDate : today();
-        var plan = rec.plan === "m30" ? "m30" : "y50";
-        openForm({name: rec.name, phone: rec.phone, plan: plan, amount: MPLANS[plan].amount, startDate: start, note: ""}, rec);
-        window.scrollTo({top: box.getBoundingClientRect().top + window.scrollY - 20, behavior: "smooth"}); return;
-      }
+      if (b.hasAttribute("data-r")) { startRenew(rec); return; }
       if (b.hasAttribute("data-e")) { openForm(rec); window.scrollTo({top: box.getBoundingClientRect().top + window.scrollY - 20, behavior: "smooth"}); return; }
       if (!window.confirm("Delete this record?\n\n" + rec.name)) return;
       fs.remove(fs.ref(db, "crm/" + tab + "/" + id)).then(function(){ msg("Deleted."); return load(); }).catch(denied);
@@ -672,17 +744,84 @@
 
     function setTab(t){
       tab = t; closeForm(); msg(""); imsg(""); pendingImport = []; $("#crmGo").disabled = true; $("#crmPaste").value = "";
-      tog($("#crmTabI"), t === "income"); tog($("#crmTabS"), t === "support"); tog($("#crmTabM"), t === "members");
-      $("#crmIncome").hidden = t !== "income"; $("#crmListPane").hidden = t === "income"; $("#crmCsv").hidden = t === "income";
+      tog($("#crmTabI"), t === "income"); tog($("#crmTabR"), t === "reminders"); tog($("#crmTabS"), t === "support"); tog($("#crmTabM"), t === "members");
+      $("#crmIncome").hidden = t !== "income"; $("#crmRem").hidden = t !== "reminders";
+      $("#crmListPane").hidden = t === "income" || t === "reminders"; $("#crmCsv").hidden = t === "income" || t === "reminders";
       $("#crmImpHelp").textContent = t === "members"
         ? "In Google Sheets, copy the \"Sending Organization\" table together with its header row (Ctrl+C), paste it here, press \"Check\", then \"Add records\". Phone numbers are normalised to +994 and duplicates are skipped. Amounts such as 50AZN are read as AZN and shown in USD."
         : "In Google Sheets, copy the \"Fərdi Dəstək\" table together with its header row, paste it here, press \"Check\", then \"Add records\". Rows with the same phone number become one order, the program is taken from the link and the package from the initial payment. The password column is never saved. A \"payment date\" column is used if present, otherwise the date is estimated from the deadline.";
       draw();
     }
-    $("#crmTabI").addEventListener("click", function(){ setTab("income"); });
-    $("#crmTabS").addEventListener("click", function(){ setTab("support"); });
-    $("#crmTabM").addEventListener("click", function(){ setTab("members"); });
+    $("#crmTabI").addEventListener("click", function(){ userTab = true; setTab("income"); });
+    $("#crmTabR").addEventListener("click", function(){ userTab = true; setTab("reminders"); });
+    $("#crmTabS").addEventListener("click", function(){ userTab = true; setTab("support"); });
+    $("#crmTabM").addEventListener("click", function(){ userTab = true; setTab("members"); });
     $("#crmReload").addEventListener("click", load);
+
+    /* ----- reminders tab ----- */
+    function waLink(phone, text){ return "https://wa.me/" + String(phone || "").replace(/\D/g, "") + "?text=" + encodeURIComponent(text); }
+    function remText(it){
+      var d = it.days;
+      if (it.type === "selection") return d === 1 ? "Selection tomorrow" : d === 0 ? "Selection today" : d > 1 ? "Selection in " + d + " days" : "Selection was " + (-d) + (d === -1 ? " day ago" : " days ago");
+      return d === 0 ? "Membership ends today" : d > 0 ? "Membership ends in " + d + (d === 1 ? " day" : " days") : "Membership ended " + (-d) + (d === -1 ? " day ago" : " days ago");
+    }
+    function remAction(it, kind){
+      if (it.type === "selection") return kind === "late" ? "The selection date has passed. Update the project status (Accepted, Reserve or Rejected)." : "Message them to check their email for the project response (and the spam folder).";
+      return it.days < 0 ? "The membership has ended. Follow up or extend it." : it.days === 0 ? "The membership ends today. Follow up or extend it." : "Follow up or extend it.";
+    }
+    /* the message that goes to the candidate is in Azerbaijani; it can be edited in WhatsApp before it is sent */
+    function remMessage(it){
+      if (it.type === "selection") {
+        var when = it.days === 0 ? "Bu gün" : it.days === 1 ? "Sabah" : fmtDate(it.date) + " tarixində";
+        return "Salam, " + it.name + ". " + when + " müraciət etdiyiniz layihənin seçim nəticələri açıqlanır. Zəhmət olmasa e-poçtunuzu (spam qovluğunu da) yoxlayın." + (it.link ? "\nLayihə: " + it.link : "");
+      }
+      return "Salam, " + it.name + ". Sending Organization üzvlüyünüzün müddəti " + fmtDate(it.date) + " tarixində " + (it.days < 0 ? "bitib" : "bitir") + ". Yeniləmək istəsəniz bizə yazın.";
+    }
+    function remRow(it, kind){
+      var btns = "";
+      if (kind === "late") btns = '<button type="button" class="adm-btn" data-edit="' + esc(it.id) + '">Open order</button>';
+      else {
+        btns = '<a class="adm-btn" href="' + esc(waLink(it.phone, remMessage(it))) + '" target="_blank" rel="noopener">WhatsApp</a> ';
+        if (it.type === "membership") btns += '<button type="button" class="adm-btn" data-ext="' + esc(it.id) + '">Extend</button> ';
+        if (kind === "due") btns += '<button type="button" class="adm-btn" data-done="' + (it.type === "selection" ? "sel" : "mem") + '" data-id="' + esc(it.id) + '" data-key="' + esc(it.key || "") + '">Done</button>';
+      }
+      return '<div class="crm-rem-row"><div><b>' + esc(it.name) + '</b> ' + badge(remText(it) + " · " + fmtDate(it.date), kind === "due" ? "warn" : kind === "late" ? "bad" : "info") +
+        '<small>' + esc(remAction(it, kind)) + '</small><small>' + esc(it.phone) + (it.link ? ' · <a href="' + esc(it.link) + '" target="_blank" rel="noopener">project</a>' : '') + '</small></div>' +
+        '<div class="crm-act">' + btns + '</div></div>';
+    }
+    function drawReminders(rem){
+      var pane = $("#crmRem");
+      if (!loaded) { pane.textContent = "Loading…"; return; }
+      function sec(title, list, kind, empty){ return '<h3>' + title + '</h3>' + (list.length ? list.map(function(it){ return remRow(it, kind); }).join("") : '<p class="adm-note">' + empty + '</p>'); }
+      var h = '<div class="st-cards"><div class="st-card"><small>Due now</small><b>' + rem.due.length + '</b></div>' +
+        '<div class="st-card"><small>Coming up (7 days)</small><b>' + rem.soon.length + '</b></div>' +
+        '<div class="st-card"><small>Selection passed, still Applied</small><b>' + rem.late.length + '</b></div></div>';
+      h += sec("Due now", rem.due, "due", "Nothing is due right now.");
+      h += sec("Coming up in the next 7 days", rem.soon, "soon", "Nothing in the next 7 days.");
+      if (rem.late.length) h += sec("Selection date passed, status still Applied", rem.late, "late", "");
+      h += '<h3>Phone notifications</h3><p class="adm-note">Download the calendar file and open it on your phone or import it into Google Calendar or Apple Calendar. You get a calendar notification at 09:00 (Baku time) the day before each pending selection date and on the day each membership ends. Importing again later normally updates the same events instead of duplicating them.</p>' +
+        '<div class="adm-actions"><button type="button" class="adm-btn" id="crmIcs">Download calendar (.ics)</button></div>';
+      pane.innerHTML = h;
+    }
+    $("#crmRem").addEventListener("click", function(e){
+      var b = e.target.closest ? e.target.closest("button") : null; if (!b) return;
+      if (b.id === "crmIcs") {
+        var r = icsText(data.members, data.support);
+        if (!r.count) { msg("No upcoming reminders to export.", true); return; }
+        download("global-volunteers-reminders.ics", r.text, "text/calendar", true);
+        msg(r.count + " calendar event" + (r.count === 1 ? "" : "s") + " exported.");
+        return;
+      }
+      var done = b.getAttribute("data-done"), id = b.getAttribute("data-id");
+      if (done) {
+        var path = done === "sel" ? "crm/support/" + id + "/projects/" + b.getAttribute("data-key") : "crm/members/" + id;
+        fs.update(fs.ref(db, path), done === "sel" ? {notified: true} : {endNotified: true}).then(function(){ msg("Marked as done."); return load(); }).catch(denied);
+        return;
+      }
+      var ext = b.getAttribute("data-ext"), edit = b.getAttribute("data-edit"), rec = null;
+      if (ext) { data.members.forEach(function(m){ if (m.id === ext) rec = m; }); if (rec) { setTab("members"); startRenew(rec); } }
+      else if (edit) { data.support.forEach(function(o){ if (o.id === edit) rec = o; }); if (rec) { setTab("support"); openForm(rec); window.scrollTo({top: box.getBoundingClientRect().top + window.scrollY - 20, behavior: "smooth"}); } }
+    });
 
     /* ----- export ----- */
     function csvCell(v, guard){
@@ -691,8 +830,8 @@
       return /[",\n\r;]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
     }
     function csvDate(iso){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); return m ? m[3] + "." + m[2] + "." + m[1] : ""; }
-    function download(name, text, type){
-      var blob = new Blob(["﻿" + text], {type: type + ";charset=utf-8"}), a = document.createElement("a");
+    function download(name, text, type, noBom){
+      var blob = new Blob([(noBom ? "" : "﻿") + text], {type: type + ";charset=utf-8"}), a = document.createElement("a");
       a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click();
       setTimeout(function(){ URL.revokeObjectURL(a.href); document.body.removeChild(a); }, 500);
     }
@@ -769,5 +908,5 @@
   root.GV_crmUtil = {AZN_PER_USD: AZN_PER_USD, usd: usd, toAzn: toAzn, fmtUsd: fmtUsd, fmtAzn: fmtAzn, usdStr: usdStr, money: money,
     normPhone: normPhone, normDate: normDate, parseAmount: parseAmount, finalAuto: finalAuto, normOrder: normOrder, calc: calc,
     importMembers: importMembers, importOrders: importOrders, buildEvents: buildEvents, pending: pending, series: series, sumRange: sumRange,
-    chartSvg: chartSvg, autoGran: autoGran, bucketKey: bucketKey, guessProgram: guessProgram, guessPack: guessPack};
+    reminders: reminders, icsText: icsText, chartSvg: chartSvg, autoGran: autoGran, bucketKey: bucketKey, guessProgram: guessProgram, guessPack: guessPack};
 })(window);
