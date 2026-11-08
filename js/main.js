@@ -611,12 +611,18 @@
           '<button type="button" class="btn-primary" id="admBulkGo" disabled style="border:none;cursor:pointer;font-family:Inter,sans-serif;">Hamısını əlavə et</button></div>' +
           '<p class="adm-msg" id="admBulkMsg" role="status"></p></details>' +
           '<details class="adm-card" id="admPdf"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Üzv PDF-i (xoş gəldin)</summary><div id="admPdfBox" style="margin-top:14px;"></div></details>' +
+          '<details class="adm-card" id="admReplies"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Cavab şablonları (WhatsApp)</summary><div id="admRepliesBox" style="margin-top:14px;"></div></details>' +
           '<details class="adm-card" id="admCrm"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">CRM (members and individual support)</summary><div id="admCrmBox" style="margin-top:14px;"></div></details>' +
           '<details class="adm-card" id="admStatsBox"><summary style="cursor:pointer;font-weight:600;font-size:1.1rem;">Statistika</summary><div style="margin-top:14px;"><button type="button" class="adm-btn" id="admStatsReload">Yenilə</button></div><div id="admStats" style="margin-top:14px;">Açanda yüklənəcək…</div></details>' +
           '<section class="adm-card"><h2>Əlavə olunmuş layihələr (<span id="admCount">0</span>)</h2><div id="admList"></div></section>';
         $("#admWho").textContent = user.email || "";
         $("#admPdf").addEventListener("toggle", function(){ if (this.open && window.GV_initMemberPdf) window.GV_initMemberPdf($("#admPdfBox")); });
         $("#admOut").addEventListener("click", function(){ authM.signOut(auth); });
+        $("#admReplies").addEventListener("toggle", function(){
+          if (!this.open) return;
+          if (window.GV_initReplies) window.GV_initReplies($("#admRepliesBox"), {fs: fs, db: db, denied: function(err){ denied(err); }});
+          else $("#admRepliesBox").textContent = "js/replies.js yüklənməyib.";
+        });
 
         var crmTitle = "CRM (members and individual support)", crmOpened = false;
         if (!window.GV_initCrm) $("#admCrmBox").textContent = "js/crm.js yüklənməyib.";
